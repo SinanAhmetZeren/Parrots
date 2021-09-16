@@ -1,0 +1,76 @@
+{% extends "auction/base.html" %}
+
+{% block content %}
+
+
+<div class="all-profiles-messages-inputs"> 
+
+    
+    <!-------- RENDERING MESSAGES TO AND FROM ONE USER -------> 
+    {% for sender in unique_senders %}
+    <div class="single-sender">
+
+        <!-- USER'S PROFILE AND USERNAME -->
+        <div class="profile-image-and-username">
+            <a  href="{% url 'public_profile' sender.username %}">
+                <img class="bid-profile-image" src="{{sender.profile.image.url}}" alt="">
+            </a>
+            <div style="display:inline-block" >
+                {{sender.username}}
+                <!-- {{sender.id}} -->
+            </div>
+
+        </div>   
+
+        <div class="messaging-and-input">
+
+            <div class="single-user-input-area">
+                <div class="messaging-page-input-area mt-1 mb-1 ">
+                    {% csrf_token %}
+                    <div id="alert-box-{{sender.id}}"></div>
+                    <input type="text" name="message_input_{{sender.id}}" 
+                    style="background-color: #060d47; color: greenyellow; font-weight: 600; border: none;" 
+                    maxlength="280" class="mx-1 textInput form-control" required="" sender="{{sender.id}}" id="sender-{{sender.id}}"> 
+                    <button class="btn btn-primary send-message-button  mr-3" id="{{sender.id}}" type="submit">Send</button>
+
+                </div>
+            </div>    
+                        
+            <div class="single-user-messages-area">
+
+                {% for message in all_messages %}
+                    {% if message.sent_by == sender or message.received_by == sender %}
+                        {% if message.sent_by == user %} 
+                            <div class="messaging-single-message">
+                                <div class="message-sent-by">{{message.sent_by|upper}}: </div> 
+                                <div class="message-text-content">{{message.message_text}}</div>
+                                <div>{{message.createdDate}}</div>                       
+                            </div>
+                        {% endif %} 
+                        {% if not message.sent_by == user %}
+                            <div class="messaging-single-message">
+                                <div class="message-sent-by" >{{message.sent_by|upper}}: </div> 
+                                <div class="message-text-content" style="color: yellow;">{{message.message_text}}</div>
+                                <div>{{message.createdDate}}</div>                       
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </div>                    
+    </div>    
+
+
+
+    </div>
+
+        {% endfor %}
+
+</div>
+
+
+
+
+
+
+
+{% endblock content %}

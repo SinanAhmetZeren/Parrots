@@ -1,0 +1,51 @@
+{% extends "auction/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <div class="content-section  user-page">
+
+      <div class="profile-section-all">
+        <div class="profile-image-section">
+          <img class="profile-image" src="{{ user.profile.image.url }}">
+        </div>
+
+          <div class="profile-information-section">
+          <div class="profile-info-item mt-3" class="social-image"><img class="social-img" src="/static/user.png" alt=""></div>
+          <div class="profile-info-item">{{ user.username }}</div>
+
+          <div class="profile-info-item mt-3" class="social-image"><img class="social-img" src="/static/email.png" alt=""></div>
+          <div class="profile-info-item">{{ user.email }}</div>
+          <div class="profile-info-item mt-3" class="social-image"><img class="social-img" src="/static/facebook.jpg" alt=""></div>
+          <div class="profile-info-item" > {% if user.profile.facebook %}{{ user.profile.facebook|truncatechars:50 }}{% else %} &nbsp {% endif %} </div>
+          <div class="profile-info-item mt-3" class="social-image"><img class="social-img" src="/static/instagram.png" alt=""></div>
+          <div class="profile-info-item"> {% if user.profile.instagram %}{{ user.profile.instagram|truncatechars:50 }}  {% else %}  &nbsp {% endif %}</div>
+          <div></div>
+          <div></div>
+
+        </div>
+      </div>
+
+      <div class="users-vehicles">
+      {{user.username | upper}}'s vehicles:  <br>
+      {% for vehicle in user.vehicle_set.all %}
+        <a href="{% url 'auction:vehicle_detail' vehicle.id %}" class="btn btn-primary active" role="button" aria-pressed="true">{{vehicle.v_name}} </a>
+      {% endfor %}
+      <a href="{% url 'auction:vehicle_create' %}" class="btn btn-success active" role="button" aria-pressed="true">Register New Vehicle </a>
+
+    </div>
+
+      <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <fieldset class="form-group profile-update-form"  >
+              {{ u_form|crispy }}
+              {{ p_form|crispy }}
+              <div class="form-group">
+                <button class="btn btn-info" type="submit">Update</button>
+            </div>
+          </fieldset>
+
+      </form>
+
+    </div>
+
+{% endblock content %}

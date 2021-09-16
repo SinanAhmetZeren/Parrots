@@ -1,0 +1,45 @@
+{% extends "./base.html" %}
+{% load crispy_forms_tags %}
+
+
+<!-- redirects here after creating auction at: auctions/create/ -->
+<!-- /auctions/create_itinerary/<pk>/ -->
+
+
+
+{% load static %}
+{% block title %} <title> Create Itinerary </title> {% endblock %}
+
+{% block content %}
+
+<div class="itinerary-page" id="{{auction.id}}" >
+    <div class="itinerary-dashboard">
+
+        <div class="itinerary-waypoints-container" id="itinerary-waypoints-container"> 
+            <div class="alert-box" id="alert-box"></div>
+
+
+        </div>
+
+
+
+        <div class="itinerary-buttons-container">
+            <div>
+                <form action="" id="trip-confirm-form">
+                {% csrf_token %}
+                <button class="btn btn-primary btn-block" id="confirm-route-button" type="submit">Confirm Route</button>
+
+            </form>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="map-section_itinerary" >
+        <div class="mapid_itinerary" id="mapid_itinerary" data-latitude="{{object.Latitude}}" data-longitude="{{object.Longitude}}"></div>
+    </div>
+</div>
+
+
+
+{% endblock %}

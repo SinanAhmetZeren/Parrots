@@ -1,0 +1,149 @@
+{% extends "./base.html" %}
+
+{% block title %} <title> Main Page </title> {% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+
+
+
+
+<div class="main-page-container">
+    <div class="dashboard">
+        <div class="filters-section">
+              <form>
+                <div class="form-row">
+                    <div class="form-label-and-input">                        
+                        <label class="form-label" for="id_auctionVehicleType">Vehicle</label>
+                        <select class="form-control" type="text" id="id_auctionVehicleType" name="auctionVehicleType">
+                            <option></option>
+                            <option>BOAT</option>
+                            <option>CARAVAN</option>
+                            <option>CAR</option>
+                            <option>BUS</option>
+                            <option>TINYHOUSE</option>
+                        </select>
+                    </div>
+
+                    <div class="form-label-and-input">                        
+                        <label class="form-label" for="exampleFormControlSelect1">Vacancy</label>
+                        <select class="form-control" type="number" name="vacancy"  id="id_vacancy">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                            <option>11</option>
+                            <option>12</option>
+                            <option>13</option>
+                            <option>14</option>
+                            <option>15</option>
+                            <option>16</option>
+                            <option>17</option>
+                            <option>18</option>
+                            <option>19</option>
+                            <option>20</option>
+                            <option>21</option>
+                            <option>22</option>
+                            <option>23</option>
+                            <option>24</option>
+                            <option>25</option>
+                            <option>26</option>
+                            <option>27</option>
+                            <option>28</option>
+                            <option>29</option>
+                        </select> 
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div  class="form-label-and-input">                            
+                        <label class="form-label" for="exampleFormControlSelect1">Starts</label>
+                        <input type="date" name="trip_startDate" id="id_trip_startDate" class="form-control">
+                    </div>
+
+                    <div  class="form-label-and-input"> 
+                        <label class="form-label" for="exampleFormControlSelect1">Ends</label>
+                        <input type="date" name="trip_endDate" id="id_trip_endDate" class="form-control">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <button class="btn btn-success double" style="justify-content: right; display: block;" id="filter-button" type="submit">Filter</button>
+                </div>
+              </form>
+
+        </div>
+
+
+
+        <div class="auctions-list">
+            <div class="all-auctions-container" id="all-auctions-container">
+               <div class="slider">
+
+                {% for auction in auctions %}
+
+                <div class="slide hidden {{auction.vehicle.vehicle_type}}" id="slide-no-{{forloop.counter0}}" data-slide_number="{{forloop.counter0}}">
+                    <div class="card slide-card " id="slide-card-{{forloop.counter}}">
+                        <img class="card-img-top" style="height: 13rem;" src="{{auction.auctionImage.url}}" alt="Card image cap">
+                        <div class="card-body">
+                                
+
+                            <h5 class="card-title"> <strong ></strong></h5>
+                            
+                            <p class="card-text">Space for <strong class="text-primary" >{{auction.vacancy}}</strong>,
+                                on <a class="btn btn-primary btn-sm px-2" data-id="{{auction.id}}" href="{% url 'auction:vehicle_detail' auction.vehicle.id %}" 
+                                role="button" aria-pressed="true">{{auction.vehicle.v_name| upper}}</a>
+        
+                            
+                            <br> 
+                            
+
+
+                            Trip from <strong class="text-primary" >{{auction.trip_startDate|date:"M d, y"}}</strong> to 
+                            <strong  class="text-primary" >{{auction.trip_endDate|date:"M d, y"}}</strong>.  <br> 
+                            
+                            Auction ends in <strong  class="text-primary" >{{auction.auctionEndDate|timeuntil}}
+                            </strong> .</p>
+                        
+                            <a href="{% url 'auction:view_auction' auction.id %}" class="btn btn-primary" 
+                            data-id="{{auction.id}}">Trip Details</a>
+                        
+                            <button class="btn btn-success see-on-map-button m-auto" id="see-on-map-button" 
+                            data-latitude="{{auction.Latitude}}" data-longitude="{{auction.Longitude}}" 
+                            data-trip_details="{{auction.tripDetails}}" data-id="{{auction.id}}" 
+                            data-slide_number="{{forloop.counter}}" type="submit">See on Map</button>
+
+                            {% if auction.vehicle.v_owner == user %}
+                            <a href="{% url 'auction:auction_delete' auction.id %}" class="btn btn-danger see-on-map-button m-auto" style="padding-left: 0.4rem; padding-right: 0.4rem;"
+                            data-id="{{auction.id}}">Delete</a>
+                            {% endif %}
+                    </div>
+                    </div>
+                </div>
+                {% endfor %}
+                <button class="slider__btn slider__btn--left"><img style="height: 2.5rem; transform: rotate(180deg);" src="/static/arrow.png" alt=""></button>
+                <button class="slider__btn slider__btn--right"><img style="height: 2.5rem;" src="/static/arrow.png" alt=""></button>
+            </div> 
+            <!-- &rarr; -->
+            </div>
+        </div>
+        <div class="add-new-auction">
+            <a href="{% url 'auction:auction_create' %}" class="btn btn-primary btn-block w-75 m-auto btn-lg"> New Voyage</a>
+        </div>
+    </div>
+    
+    <div class="map-container">
+        <div class="mapid" id="mapid" ></div>
+    </div>
+
+
+</div>
+
+{% endblock %}

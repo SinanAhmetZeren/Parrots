@@ -1,0 +1,214 @@
+{% extends "./base.html" %}
+{% load crispy_forms_tags %} 
+
+
+{% load static %}
+{% block title %} <title> Delete </title> {% endblock %}
+
+{% block content %}
+<!-- <div class="auction-form-page">
+    <div class="auction-form-content-section" >
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <button class="btn btn-primary" id="create-form-button" type="submit">Delete</button>
+        </form>
+    </div>
+</div> -->
+
+
+{% for bid in object.bid_set.all %}
+                {% if bid.user == user %}
+                <div id="user-bid-id" data-current_user_bid_id="{{bid.id}}" style="display: none;"> </div>
+                {% endif %}
+            {% endfor %}
+
+
+
+<div class="auction-detail-page" data-auction_id="{{object.id}}" data-current_user_id="{{user.id}}">
+ 
+    <div class="auction-detail-page-left-column">
+        <div class="auction-detail-page-details-section">
+            <ul class="list-group ">
+                    <li class="list-group-item auction-card1">                      
+                        <div class="auction-card">
+                            
+                            <div class="auction-card-box ">
+                                Vacancy: 
+                            </div>
+                            <!-- class="text-info" -->
+                            <div class="auction-card-box">
+                                <!-- <a href="#" class="btn btn-outline-info btn-sm  px-2" role="button" aria-pressed="true">
+                                    {{object.vacancy}}
+                                </a> persons  -->
+                                <span class="text-primary">{{object.vacancy}}</span> persons
+                            </div>
+
+                            <div class="auction-card-box">
+                                Vehicle:
+                            </div>
+
+                            <div class="auction-card-box">
+                                <a href="{% url 'auction:vehicle_detail' object.vehicle.id %}" class="btn btn-primary btn-sm px-2" role="button" aria-pressed="true">
+                                    {{object.vehicle.v_name| upper|slice:":18"}}
+                                </a> 
+                            </div>    
+                                
+                            <div class="auction-card-box">
+                                Host: 
+                            </div>   
+                                
+                            <div class="auction-card-box">
+                                <a href="{% url 'public_profile' object.vehicle.v_owner.username %}" class="btn btn-primary btn-sm px-2" role="button" aria-pressed="true">
+                                    {{object.vehicle.v_owner| upper|slice:":18"}}
+                                </a> 
+                            </div>
+
+                            <div class="auction-card-box">
+                                Between: 
+                            </div>
+
+                            <div class="auction-card-box">
+                                <!-- <a href="#" class="btn btn-outline-info btn-sm  px-2" role="button" aria-pressed="true">
+                                    {{object.trip_startDate|date:"M d, y"}}
+                                </a>  -->
+                                <span class="text-primary">{{object.trip_startDate|date:"M d, y"}}</span> 
+
+                                to
+                                <!-- <a href="#" class="btn btn-outline-info btn-sm  px-2" role="button" aria-pressed="true">
+                                    {{object.trip_endDate|date:"M d, y"}}
+                                </a>  -->
+                                <span class="text-primary">{{object.trip_endDate|date:"M d, y"}}</span> 
+
+                            </div>
+
+                            <div class="auction-card-box">
+                                Closes in: 
+                            </div>
+
+                            <div class="auction-card-box">
+                                <!-- <a href="#" class="btn btn-outline-info btn-sm  px-2" role="button" aria-pressed="true">
+                                    {{object.auctionEndDate| timeuntil}}
+                                </a>  -->
+                                <span class="text-primary">{{object.auctionEndDate|timeuntil}}</span> 
+
+                            </div>
+                       
+                        </div>
+                    </li>
+            </ul>       
+
+            <div class="auction-bids-box">
+
+                <ul class="list-group">
+                    <!-- for bid in object.bid_set.all|slice:":5"  -->
+                    {% for bid in object.bid_set.all %}
+                        <li class="list-group-item bids-list-item">
+                            <div class="single-bid">
+                                <div>
+                                    <a href="{% url 'public_profile' bid.user.username %}"><img class="bid-profile-image" src="{{bid.user.profile.image.url}}" alt=""></a>
+                                    
+                                </div>
+                                <div class="bid-amount">
+                                    <a href="{% url 'public_profile' bid.user.username %}" class="btn btn-outline-primary btn-sm px-2" role="button" aria-pressed="true">
+                                        {{bid.user.username|slice:":18"}}
+                                    </a> 
+                                     bid <strong> €{{bid.price}}</strong>, 
+                                    <br> {{bid.bidCreated|timesince}} ago
+                                    {% if object.vehicle.v_owner == user %}
+                                    
+                                    <button type="button" class="btn btn-outline-success btn-sm px-2" 
+                                    data-container="body" data-toggle="popover" data-placement="bottom"
+                                    data-content="{{bid.introduction}}">
+                                    Message</button>
+                                    {% endif %}
+                                </div>
+
+                            </div>
+                        </li>
+                    {% endfor %}  
+                </ul>       
+            </div>
+        </div>
+        <div class="auction-detail-page-bid-buttons-section">
+
+            <!-- IF USER HAS A BID FOR THIS AUCTION, DISPLAY THE CHANGE BID BUTTON -->
+                    
+                    <h6  style="color: red; margin-left: 4rem;" >This action is not reversible. <br> Are you sure you want to delete?</h6>
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <button class="btn btn-danger btn-block w-75 mr-auto ml-auto" id="create-form-button" type="submit">Confirm Delete Voyage</button>
+                    </form>
+                
+        <!-- IF THE USER HAS NO BID YET, RENDER NEW BID BUTTON, BUT INITIALLY HIDDEN.  JS WILL SHOW. -->
+                    <!-- <button class="btn btn-primary btn-lg btn-block new-bid  new-bid-button hidden" type="button" data-toggle="modal" data-target="#exampleModalCenter" >New Bid</button> -->
+                                    <!-- new bid button -->
+
+                    <!-- <div class="modal fade new-bid " id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+
+                            <form method="POST" enctype="multipart/form-data" class="modal-content " id="new-bid-form">
+                            <div class="modal-body">
+                                <div class="alert-box"></div>
+                                {% csrf_token %}
+                                <div id="div_id_price" class="form-group"> 
+                                    <label for="id_price" class=" requiredField">
+                                        Price<span class="asteriskField">*</span> 
+                                    </label> 
+                                    <div class=""> 
+                                        <input type="number" name="price" class="numberinput form-control new-bid-price" required="" id="id_price"> <br>
+                                    </div> 
+                                    <label for="id_introducton" class=" requiredField">
+                                        Do you want to say something about yourself?<span class="asteriskField">*</span> 
+                                    </label> 
+                                    <div>
+                                        <textarea name="introduction" 
+                                        class="numberinput form-control new-bid-price" 
+                                        id="id_introduction" cols="30" rows="10" placeholder="Anything you want to share with the host..." ></textarea>  
+                                    </div>
+                          
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary " id="new-bid-button">New Bid</button>
+                            </div>
+                            </form>
+                        </div>
+                    </div> -->
+        
+        </div>
+    </div>
+
+    <div class="auction-detail-page-middle-column">
+            <div class="auction-detail-page-vehicle-image-section"> 
+                <img class="auction-detail-page-vehicle-image" src="{{object.auctionImage.url}}" alt="">
+            </div>
+            <div class="auction-detail-page-text">
+                <div class="auction-detail-text-content">
+                {{object.tripDetails}}
+                </div> 
+            </div>
+    </div>
+
+    <div class="auction-detail-page-right-column">
+
+        <div class="map-section-detail-page" >
+            <div class="mapid2" id="mapid2" data-latitude="{{object.Latitude}}" data-longitude="{{object.Longitude}}"></div>
+        </div>
+    </div>
+</div>
+    <div class="waypoints-information" id="waypoints-information" data-waypoints_array="{{object.waypoints.trip}}">
+    </div>    
+</div>
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+

@@ -1,0 +1,75 @@
+{% extends "auction/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+    <div class="content-section  user-page">
+      <div class="profile-section-all">
+        <div class="profile-image-section">
+          {% for user in profile_users%}
+          <img class="profile-image" src="{{ user.profile.image.url }}">
+       {% endfor %}
+        </div>
+        {% for user in profile_users%}
+        <div class="profile-information-section">
+          <div class="profile-info-item" class="social-image"><img class="social-img" src="/static/user.png" alt=""></div>
+          <div class="profile-info-item">{{ user.username }}</div>
+
+          <div class="profile-info-item" class="social-image"><img class="social-img" src="/static/email.png" alt=""></div>
+          <div class="profile-info-item">{{ user.email }}&nbsp</div>
+
+          <div class="profile-info-item" class="social-image"><img class="social-img" src="/static/facebook.jpg" alt=""></div>
+          <div class="profile-info-item" > {% if user.profile.facebook %}{{ user.profile.facebook|truncatechars:50 }} {% else %} &nbsp {% endif %} </div>
+
+          <div class="profile-info-item" class="social-image"><img class="social-img" src="/static/instagram.png" alt=""></div>
+          <div class="profile-info-item">{% if user.profile.instagram %}{{ user.profile.instagram|truncatechars:50 }}  {% else %} &nbsp  {% endif %}</div>          
+        
+          <div></div>
+          {% if not user1 == user %}
+          <div class="messaging-page-input-area mt-3">
+             {% csrf_token %}
+             <input type="text" name="message_input_{{user1.id}}" maxlength="280" class=" textInput form-control" required="" sender="{{user1.id}}" id="sender-{{user1.id}}"> 
+             <button class="btn btn-primary send-message-button ml-3" id="{{user1.id}}" type="submit">Send DM</button>
+           </div>
+           <div></div>
+           <div id="alert-box-{{user1.id}}" class="mt-3" ></div>
+           {% endif %}
+          
+        </div>
+
+
+        {% endfor %}
+        <!-- {% for user1 in profile_users %}
+        <div></div>
+        {% if not user1 == user %}
+        <div class="messaging-page-input-area mt-3">
+           {% csrf_token %}
+           <input type="text" name="message_input_{{user1.id}}" maxlength="280" class=" textInput form-control" required="" sender="{{user1.id}}" id="sender-{{user1.id}}"> 
+           <button class="btn btn-primary send-message-button ml-3" id="{{user1.id}}" type="submit">Send DM</button>
+         </div>
+         <div></div>
+         <div id="alert-box-{{user1.id}}" class="mt-3" ></div>
+         {% endif %}
+       {% endfor %} -->
+
+
+
+       </div>
+
+
+          {% for user1 in profile_users%}
+            {% if user1.vehicle_set.first %}
+            <div class="users-vehicles">
+
+            {{user1.username | upper}}'s vehicles:  <br>
+                {% for vehicle in user1.vehicle_set.all %}
+                  <a href="{% url 'auction:vehicle_detail' vehicle.id %}" class="btn btn-primary active" role="button" aria-pressed="true">{{vehicle.v_name}} </a>
+                {% endfor %}
+            {% endif %}
+            {% endfor %}
+      </div>
+
+
+
+    </div>
+{% endblock content %}
