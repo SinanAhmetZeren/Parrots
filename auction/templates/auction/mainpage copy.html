@@ -115,13 +115,13 @@
                             <a href="{% url 'auction:view_auction' auction.id %}" class="btn btn-primary" 
                             data-id="{{auction.id}}">Trip Details</a>
                         
-                            <button class="btn btn-success see-on-map-button m-auto" id="see-on" 
+                            <button class="btn btn-success see-on-map-button m-auto" id="see-on-map-butt" 
                             data-latitude="{{auction.Latitude}}" data-longitude="{{auction.Longitude}}" 
                             data-trip_details="{{auction.tripDetails}}" data-id="{{auction.id}}" 
                             data-slide_number="{{forloop.counter}}" type="submit">See on Map</button>
 
                             {% if auction.vehicle.v_owner == user %}
-                            <a href="{% url 'auction:auction_delete' auction.id %}" class="btn btn-danger see-on m-auto" style="padding-left: 0.4rem; padding-right: 0.4rem;"
+                            <a href="{% url 'auction:auction_delete' auction.id %}" class="btn btn-danger see-on-map-button m-auto" style="padding-left: 0.4rem; padding-right: 0.4rem;"
                             data-id="{{auction.id}}">Delete</a>
                             {% endif %}
                     </div>

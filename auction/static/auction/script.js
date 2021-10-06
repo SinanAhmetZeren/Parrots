@@ -700,7 +700,7 @@ class App_create_itinerary_page {
                   const sText = `Itinerary successfully created for this trip.`
                   handleAlerts1('success', sText)
                   let auction_view_url = `/auctions/${auction_id}/`
-                  let auction_view_button = `<a href="${auction_view_url}" class="btn btn-primary btn-block" role="button" aria-pressed="true" id="auction-view-button" type="submit">Go To Auction</a>`
+                  let auction_view_button = `<a href="${auction_view_url}" class="btn btn-primary btn-block" role="button" aria-pressed="true" id="auction-view-button" type="submit">Go To Trip</a>`
                   // <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Primary link</a>
 
                   let form = document.querySelector("#trip-confirm-form")
