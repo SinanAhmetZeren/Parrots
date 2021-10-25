@@ -3,73 +3,129 @@
 {% block content %}
 
 
-    <div class="content-section  user-page">
-      <div class="profile-section-all">
-        <div class="profile-image-section">
-          {% for user in profile_users%}
-          <img class="profile-image" src="{{ user.profile.image.url }}">
-       {% endfor %}
-        </div>
-        {% for user in profile_users%}
-        <div class="profile-information-section">
-          <div class="profile-info-item" class="social-image"><img class="social-img" src="/static/user.png" alt=""></div>
-          <div class="profile-info-item">{{ user.username }}</div>
+{% for user in profile_users%}
 
-          <div class="profile-info-item" class="social-image"><img class="social-img" src="/static/email.png" alt=""></div>
-          <div class="profile-info-item">{{ user.email }}&nbsp</div>
-
-          <div class="profile-info-item" class="social-image"><img class="social-img" src="/static/facebook.jpg" alt=""></div>
-          <div class="profile-info-item" > {% if user.profile.facebook %}{{ user.profile.facebook|truncatechars:50 }} {% else %} &nbsp {% endif %} </div>
-
-          <div class="profile-info-item" class="social-image"><img class="social-img" src="/static/instagram.png" alt=""></div>
-          <div class="profile-info-item">{% if user.profile.instagram %}{{ user.profile.instagram|truncatechars:50 }}  {% else %} &nbsp  {% endif %}</div>          
-        
-          <div></div>
-          {% if not user1 == user %}
-          <div class="messaging-page-input-area mt-3">
-             {% csrf_token %}
-             <input type="text" name="message_input_{{user1.id}}" maxlength="280" class=" textInput form-control" required="" sender="{{user1.id}}" id="sender-{{user1.id}}"> 
-             <button class="btn btn-primary send-message-button ml-3" id="{{user1.id}}" type="submit">Send DM</button>
-           </div>
-           <div></div>
-           <div id="alert-box-{{user1.id}}" class="mt-3" ></div>
-           {% endif %}
-          
-        </div>
-
-
-        {% endfor %}
-        <!-- {% for user1 in profile_users %}
-        <div></div>
-        {% if not user1 == user %}
-        <div class="messaging-page-input-area mt-3">
-           {% csrf_token %}
-           <input type="text" name="message_input_{{user1.id}}" maxlength="280" class=" textInput form-control" required="" sender="{{user1.id}}" id="sender-{{user1.id}}"> 
-           <button class="btn btn-primary send-message-button ml-3" id="{{user1.id}}" type="submit">Send DM</button>
-         </div>
-         <div></div>
-         <div id="alert-box-{{user1.id}}" class="mt-3" ></div>
-         {% endif %}
-       {% endfor %} -->
-
-
-
-       </div>
-
-
-          {% for user1 in profile_users%}
-            {% if user1.vehicle_set.first %}
-            <div class="users-vehicles">
-
-            {{user1.username | upper}}'s vehicles:  <br>
-                {% for vehicle in user1.vehicle_set.all %}
-                  <a href="{% url 'auction:vehicle_detail' vehicle.id %}" class="btn btn-primary active" role="button" aria-pressed="true">{{vehicle.v_name}} </a>
-                {% endfor %}
-            {% endif %}
-            {% endfor %}
-      </div>
-
-
-
+<div class="public-profile-page">
+  
+  
+<!-- PROFILE IMAGE AND CONTACT INFORMATION  -->
+  <div class="user-image-and-info">
+    
+    <!-- PROFILE IMAGE -->
+    <div class="user-image">
+      <div class="image-container"><img class="user-image-img" src="{{ user.profile.image.url }}" alt=""></div>
     </div>
+
+    <!-- CONTACT DETAILS -->
+    <div class="user-contact-details">
+
+      <div class="user-contact-line">
+        <div class="profile-page-icon"><img class="social-img" src="/static/user.png" alt=""></div>
+        <div class="profile-page-data">{{ user.username }}</div>
+      </div>
+      <div class="user-contact-line">
+        <div class="profile-page-icon"><img class="social-img" src="/static/email.png" alt=""></div>
+        <div class="profile-page-data">{% if user.email %}{{ user.email }}{% else %} &nbsp {% endif %}</div>
+      </div>
+      <div class="user-contact-line">
+        <div class="profile-page-icon"><img class="social-img" src="/static/email.png" alt=""></div>
+        <div class="profile-page-data">{% if user.email %}{{ user.email }}{% else %} &nbsp {% endif %}</div>
+      </div>
+      <div class="user-contact-line">
+        <div class="profile-page-icon"><img class="social-img" src="/static/facebook.jpg" alt=""></div>
+        <div class="profile-page-data"> {% if user.profile.facebook %}{{ user.profile.facebook|truncatechars:50 }} {% else %} &nbsp {% endif %} </div>
+      </div>
+      <div class="user-contact-line">
+        <div class="profile-page-icon"><img class="social-img" src="/static/instagram.png" alt=""></div>
+        <div class="profile-page-data">{% if user.profile.instagram %}{{ user.profile.instagram|truncatechars:50 }}  {% else %} &nbsp  {% endif %}</div>          
+      </div>
+      <div class="messaging-page-input-area ml-2 mt-2">
+        {% csrf_token %}
+        <input type="text" name="message_input_{{user.id}}" maxlength="280" class=" textInput form-control" required="" sender="{{user.id}}" id="sender-{{user.id}}"> 
+        <button class="btn btn-primary send-message-button ml-1" id="{{user.id}}" type="submit">Send DM</button>
+      </div>
+    </div>
+  </div>
+<!-- PROFILE IMAGE AND CONTACT INFORMATION  -->
+
+
+
+
+{% for user1 in profile_users %}
+<!-- USER'S VEHICLES -->
+  <div class="user-vehicles">
+    <h4 style="color: white; margin-left: 2rem;">Vehicles</h4>
+
+    {% if user1.vehicle_set.first %}
+      <div>
+        {% for vehicle in user1.vehicle_set.all %}
+
+            <!-- image + type + name + capacity  -->
+          <div class="vehicle-line"> 
+            <div class="vehicle-icon">
+              <img src="{{vehicle.v_image.url}}" alt="">
+            </div>
+            <div>{{vehicle.v_name | upper}}  </div>
+            <div>{{vehicle.vehicle_type |title}} for {{vehicle.v_capacity}} persons</div>
+            <!-- <div> </div>         -->
+            <div>
+              <a href="{% url 'auction:vehicle_detail' vehicle.id %}" 
+              class="btn btn-outline-primary" role="button" aria-pressed="true">View</a>
+            </div>
+          </div>
+
+      {% endfor %}
+    {% endif %}
+      </div>
+    </div>
+<!-- USER'S VEHICLES -->
+
+
+
+
+<!-- USER'S VOYAGES -->
+  <div class="user-voyages">
+    {% if user1.vehicle_set.first %}
+    <h4 style="color: white; margin-left: 2rem;">Voyages</h4>
+          {% for vehicle in user1.vehicle_set.all %}
+            {% if vehicle.auction_set %}
+              {% for auction in vehicle.auction_set.all %}
+                
+              
+              <div class="voyage-line">
+                  <div class="voyage-icon">
+                    <img src="{{auction.auctionImage.url}}" alt="">
+                  </div>
+                  <div>
+                    Voyage for {{ auction.vacancy }} people on 
+                    <!-- <a href="{% url 'auction:vehicle_detail' auction.vehicle.id %}"  role="button" aria-pressed="true">
+                      {{ auction.vehicle.v_name | upper }}
+                    </a> -->
+                    {{ auction.vehicle.v_name | upper }}
+                    from {{ auction.trip_startDate |date:"M d, y"}} to {{ auction.trip_endDate |date:"M d, y" }} 
+                  </div>
+ 
+                 <div><a href="{% url 'auction:view_auction' auction.id %}" 
+                  class="btn btn-outline-primary" role="button" 
+                  aria-pressed="true">View </a>
+                </div>
+                  <!-- <div>
+                    <a href="{% url 'auction:vehicle_detail' vehicle.id %}" 
+                    class="btn btn-outline-primary" role="button" aria-pressed="true">View</a>
+                  </div> -->
+              
+                </div>
+
+
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+  {% endif %}
+  </div>
+  <!-- USER'S VOYAGES -->
+  {% endfor %}
+
+</div>
+{% endfor %}
+
 {% endblock content %}

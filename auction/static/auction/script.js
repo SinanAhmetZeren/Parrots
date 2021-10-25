@@ -30,14 +30,12 @@ const slider = function (slidenumber=0) {
   let main_page = document.querySelector(".main-page-container")
 
    const goToSlide = function (slide) {
-    console.log("hello from slider goToSlide");
 
     if(!single_vehicle_page){
         if (!my_vehicles_page){
         
           slides.forEach(
           (s, i) => {
-            console.log("hello from for each 40");
             (s.style.transform = `translateX(${50 * (i - slide)}%) scale(0.88)`);
               s.classList.add("transparent-item")
               s.classList.remove("non-transparent-item")
@@ -143,6 +141,60 @@ const goToSlide = function (slide) {
 }
 
 
+////////// PROFILE AND PUBLIC PROFILE PAGES //////
+
+
+
+let voyage_lines = document.querySelectorAll(".voyage-line")
+let public_profile_page = document.getElementById("public-profile-page")
+let username = document.getElementById("username")
+if (username) {username = username.innerHTML
+}
+let voyages_h4_element = document.getElementById("voyages")
+let user_auctions_url = `/voyages/uservoyages/${username}/`
+let my_auctions_url = `/voyages/myvoyages/`
+let user_auctions_button = 
+`<a href="${user_auctions_url}" class="btn btn-primary" 
+style="box-shadow: rgba(3, 7, 59, 0.15) 0px -2px 5px 0px inset,
+rgba(3, 7, 59, 0.3) 0px -5px 9px 0px inset; 
+/* rgba(3, 7, 59, 0.4) 0px -7px 11px 0px inset; */
+border-radius: .9rem; font-weight: 700; border:none;
+margin-left: 1.7rem;"
+role="button" aria-pressed="true" 
+id="auction-view-button" type="submit">Map View</a>`
+let my_auctions_button = 
+`<a href="${my_auctions_url}" class="btn btn-primary" 
+style="box-shadow: rgba(3, 7, 59, 0.15) 0px -2px 5px 0px inset,
+rgba(3, 7, 59, 0.3) 0px -5px 9px 0px inset; 
+/* rgba(3, 7, 59, 0.4) 0px -7px 11px 0px inset; */
+border-radius: .9rem; font-weight: 700; border:none;
+margin-left: 1.7rem;"
+role="button" aria-pressed="true" 
+id="auction-view-button" type="submit">Map View</a>`
+if (voyage_lines.length > 0) {
+  if (public_profile_page){
+    voyages_h4_element.innerHTML = `Voyages
+    ${user_auctions_button}`
+  }
+  else {
+    voyages_h4_element.innerHTML = `Voyages
+    ${my_auctions_button}`
+    setTimeout(() => {
+      if (document.getElementById("cke_id_profile_info")) {
+        document.getElementById("cke_id_profile_info").style.width = "100%"
+        document.getElementById("cke_id_profile_info").style.display = "block"
+
+      }
+    }, 3000);
+    setTimeout(() => {
+      if (document.getElementById("cke_id_profile_info")) {
+        document.getElementById("cke_id_profile_info").style.width = "100%"
+        document.getElementById("cke_id_profile_info").style.display = "block"
+
+      }
+    }, 8000);
+  }
+}
 
 
 /////////////////// MAIN PAGE APP /////////////////////////////////
@@ -151,28 +203,112 @@ const goToSlide = function (slide) {
 /////////////////// MAIN PAGE APP /////////////////////////////////
 /////////////////////////// MAPID /////////////////////////////////
 
+let mapCenter_custom = 0
+let mapZoom_custom = 0
+let vehicle_filter = null
+let vacancy_filter = null
+let startdate_filter = null
+let enddate_filter = null
+
+let vehicle_filter_field = document.getElementsByName("auctionVehicleType")
+let vacancy_filter_field = document.getElementsByName("vacancy")
+let startdate_filter_field = document.getElementsByName("trip_startDate")
+let enddate_filter_field = document.getElementsByName("trip_endDate")
+
+// let allmarkers500 = 500
 
 class App_main_page {
   #map;
   #mapZoomLevel = 8;
   #seeOnMapButtons = document.querySelectorAll('.see-on-map-button');
-  // #toggleExpiredButton = document.querySelector("#toggle-expired-button")
-  // #toggleExpired = false
+  #mapbounds 
+  #map_lat_low = 0
+  #map_lat_high = 0
+  #map_lng_low = 0 
+  #map_lng_high = 0
+  #filterButton = document.getElementById("filter-button")
+  #filterButton2 = document.getElementById("filter-button2")
+  // #clearFilterButton = document.getElementById("clear-filter-button")
+  #input_latLT = document.getElementsByName("lat__lt")[0]
+  #input_latGT = document.getElementsByName("lat__gt")[0]
+  #input_lngLT = document.getElementsByName("lon__lt")[0]
+  #input_lngGT = document.getElementsByName("lon__gt")[0]
 
   constructor() {
     this._getPosition();
     this.#seeOnMapButtons.forEach(button => button.addEventListener('click', this._moveToAuction.bind(this)));
-    // this.#toggleExpiredButton.addEventListener("click", this._toggleExpiredAuctions.bind(this));  
+    this.#filterButton.addEventListener("mouseover", this._getMapBounds_and_Zoom.bind(this))
+    this.#filterButton2.addEventListener("mouseover", this._getMapBounds_and_Zoom.bind(this))
+
+    // console.log("vehicle_filter:", vehicle_filter);
+    // console.log("vacancy_filter:", vacancy_filter);
+    // console.log("startdate_filter:", startdate_filter);
+    // console.log("enddate_filter:", enddate_filter);
+
+    vehicle_filter_field[0].options.selectedIndex = localStorage.getItem('vehicle')
+    vacancy_filter_field[0].options.selectedIndex = localStorage.getItem('vacancy')
+    let start_date = localStorage.getItem('starts')
+    let end_date = localStorage.getItem("ends")
+    let start_year = start_date.substr(1, 4)
+    let start_month = start_date.substr(6, 2)
+    let start_day = start_date.substr(9, 2)
+    let end_year = end_date.substr(1, 4)
+    let end_month = end_date.substr(6, 2)
+    let end_day = end_date.substr(9, 2)
+
+//     console.log("start:",start_day,"-",start_month,"-",start_year);
+//     console.log("end:",end_day,"-",end_month,"-",end_year);
+
+    startdate_filter_field[0].value = `${start_year}-${start_month}-${start_day}`  
+    enddate_filter_field[0].value = `${end_year}-${end_month}-${end_day}`
   }
 
-  // _toggleExpiredAuctions(){}
+  // _clearFilter(){
+  //   vehicle_filter_field[0].options.selectedIndex = 0
+  //   vacancy_filter = vacancy_filter_field[0].options.selectedIndex = 0 
+  //   startdate_filter = startdate_filter_field[0].value = 0 
+  //   enddate_filter = enddate_filter_field[0].value = 0 
+  // }
+
+  _getMapBounds_and_Zoom() {
+    this.#mapbounds = this.#map.getBounds()
+    this.#map_lat_low = this.#mapbounds._southWest.lat
+    this.#map_lat_high = this.#mapbounds._northEast.lat
+    this.#map_lng_low = this.#mapbounds._southWest.lng
+    this.#map_lng_high = this.#mapbounds._northEast.lng
+    
+    this.#input_latGT.value = (+this.#map_lat_low.toFixed(3) );
+    this.#input_latLT.value = (+this.#map_lat_high.toFixed(3)) ;
+    this.#input_lngGT.value = (+this.#map_lng_low.toFixed(3)) ;
+    this.#input_lngLT.value = (+this.#map_lng_high.toFixed(3)) ;
+
+    this.#mapZoomLevel = this.#map.getZoom() 
+    mapZoom_custom = this.#mapZoomLevel
+    mapCenter_custom = [(+this.#map_lat_low + +this.#map_lat_high)/2, (+this.#map_lng_low + +this.#map_lng_high)/2 ]
+    
+    vehicle_filter = vehicle_filter_field[0].options.selectedIndex
+    vacancy_filter = vacancy_filter_field[0].options.selectedIndex
+    startdate_filter = startdate_filter_field[0].value
+    enddate_filter = enddate_filter_field[0].value
+
+    localStorage.setItem('mapcenter', JSON.stringify(mapCenter_custom));
+    localStorage.setItem('mapzoom', JSON.stringify(mapZoom_custom));
+    localStorage.setItem('vehicle', JSON.stringify(vehicle_filter));
+    localStorage.setItem('vacancy', JSON.stringify(vacancy_filter));
+    localStorage.setItem('starts', JSON.stringify(startdate_filter));
+    localStorage.setItem('ends', JSON.stringify(enddate_filter));
+
+
+    // console.log("vehicle_filter_field: ",vehicle_filter_field);
+  }
+
 
   _getPosition() {
     if (navigator.geolocation)
       navigator.geolocation.getCurrentPosition(
         this._loadMap.bind(this),
         function () {
-          alert("Could not get your position");
+          alert("Could not get your position.  Please use secure connection with HTTPS ! ");
         }
       );
   }
@@ -197,20 +333,37 @@ class App_main_page {
 
 
   _loadMap(position) {
-    // console.log("hello from loadmap");
 
     const { latitude } = position.coords;
     const { longitude } = position.coords;
-    // console.log(`https://www.google.pt/maps/@${latitude},${longitude}`);
     const coords = [latitude, longitude];
 
-    this.#map = L.map("mapid", {worldCopyJump:true}).setView(coords, 8);
-    // console.log("mapzoom level");
+    const map_center_from_memory = JSON.parse(localStorage.getItem('mapcenter'));
+    const map_zoom_from_memory = JSON.parse(localStorage.getItem('mapzoom'));
+    mapCenter_custom = map_center_from_memory
+
+    // console.log("map zoom memory: ",map_zoom_from_memory);
+    // console.log("map center memory: ", +map_center_from_memory[0], +map_center_from_memory[1]);
+    if (mapCenter_custom) {
+    this.#map = L.map("mapid", {worldCopyJump:true}).setView([+map_center_from_memory[0], +map_center_from_memory[1]], map_zoom_from_memory);
+     }  else {
+    this.#map = L.map("mapid", {worldCopyJump:true}).setView(coords, this.#mapZoomLevel);
+     }
+
+    localStorage.removeItem('mapcenter')
+    localStorage.removeItem('mapzoom')
+    localStorage.removeItem('vehicle')
+    localStorage.removeItem('vacancy')
+    localStorage.removeItem('starts')
+    localStorage.removeItem('ends')
+
+
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(this.#map);
     this.#seeOnMapButtons.forEach(button => this._addMarker(button))  
+
 
 }
 
@@ -224,24 +377,36 @@ class App_main_page {
 
   _addMarker(button) {
     let coords = [button.dataset.latitude, button.dataset.longitude]
-    let info = button.dataset.trip_details.slice(0,60) + "..."
+    let info = button.dataset.trip_details.slice(0,160) + "..."
+    let vehicle_type = button.dataset.vehicle_type
+    let auction_title = button.dataset.trip_title.toUpperCase()
     L.marker(coords)
     .addTo(this.#map)
     .bindPopup(
         L.popup({
-        maxWidth: 130,
-        minWidth: 130,
+        maxWidth: 200,
+        minWidth: 200,
         autoClose: false,
         closeOnClick: false,
         className: `${button.dataset.id}-auctionID`,
         })) 
     .setPopupContent(
-        // ` <a href="${window.location.origin}/auctions/${button.dataset.id}" style="color:white">${info}</a>`
-          `<a href="javascript:void(0);" onclick="goToSlide(${+button.dataset.slide_number-1})" style="color:white">&#128270; ${info}</a>`
-    )
+        // ` <a href="${window.location.origin}/voyages/${button.dataset.id}" style="color:white">${info}</a>`
+          // `<a href="javascript:void(0);"  onclick="goToSlide(${+button.dataset.slide_number-1})" style="color:white">&#128270; <strong style="font-style:italic;color:#ffff9b;font-weight:700">${auction_title}</strong> <br/> ${info}</a>`
+    `
+    <div class="card popup-card" style="width: 14rem;">
+  <div class="card-body popup-card-body">
+    <h7 class="card-title" style="color:darkred; font-weight:700;">${auction_title}</h7>
+    <br>
+    <a href="javascript:void(0);" style="color:#664d23" onclick="goToSlide(${+button.dataset.slide_number-1})" 
+    style="color:white">&#128270;${info}</a>
+    </div>
+</div>`
+    
+          )
     .openPopup(); 
     
-
+console.log(info);
   }
 
   _moveToClick(coords) {
@@ -254,24 +419,15 @@ class App_main_page {
   }
 }
 
+
+
+
 /////////////////// AUCTION DETAIL PAGE APP /////////////////////////////////
 /////////////////// AUCTION DETAIL PAGE APP /////////////////////////////////
 /////////////////// AUCTION_VIEW.HTML ///////////////////////////////////////
 ////////////////// MAPID2 ///////////////////////////////////////////////////
   
-// $(function () {
-//   $('[data-toggle="popover"]').popover()
-//   console.log("enable popovers");
-// })
 
-// $(document).ajaxComplete(function() {
-//   $('[data-toggle="popover"]').popover();
-// });
-
-// $(document).ajaxSuccess(function () {
-//   $("[data-toggle=popover]").popover();
-
-// });
 $("[data-toggle=popover]").popover();  
 
 
@@ -283,12 +439,10 @@ class App_auction_detail_page {
   #waypoints_array = []
   #polyline
 
-
   constructor() {
     this._extract_waypoints_JSON()
     this._getPosition();
     this.#seeOnMapButtons.forEach(button => button.addEventListener('click', this._moveToAuction.bind(this)));
-
    }
 
 
@@ -379,6 +533,8 @@ _drawPolygon() {
   })
   let bounds = L.latLngBounds(this.#waypoints_array).pad(.1) 
   this.#map.fitBounds(bounds)
+  const currentZoom = this.#map.getZoom()
+  if (currentZoom == 18) this.#map.setZoom(12)
 }
 }
 
@@ -391,6 +547,8 @@ class App_auction_create_page {
   #map;
   #mapZoomLevel = 6;
   #createFormButton = document.querySelector("#create-form-button")
+  
+
 
   constructor() {
     this._getPosition();
@@ -398,8 +556,36 @@ class App_auction_create_page {
     if (window.location.href.includes("update")){
       this.#createFormButton.textContent = "Update Auction"
     }    
-    console.log("createformbutton:",this.#createFormButton.textContent);
-    }
+    setTimeout(() => {
+      if (document.getElementById("cke_id_tripDetails")) {
+        document.getElementById("cke_id_tripDetails").style.width = "30rem"
+        document.getElementById("cke_id_tripDetails").style.display = "block"
+
+      }
+    }, 3000);
+    setTimeout(() => {
+      if (document.getElementById("cke_id_tripDetails")) {
+        document.getElementById("cke_id_tripDetails").style.width = "30rem"
+        document.getElementById("cke_id_tripDetails").style.display = "block"
+
+      }
+    }, 7000);
+    setTimeout(() => {
+      if (document.getElementById("cke_id_tripDetails")) {
+        document.getElementById("cke_id_tripDetails").style.width = "30rem"
+        document.getElementById("cke_id_tripDetails").style.display = "block"
+
+      }
+    }, 25000);
+
+      } 
+
+
+
+
+      
+
+    
 
   _getPosition() {
     if (navigator.geolocation)
@@ -412,7 +598,8 @@ class App_auction_create_page {
   }
      
   _loadMap(position) {
-    const { latitude } = position.coords;
+    
+        const { latitude } = position.coords;
     const { longitude } = position.coords;
     const coords = [latitude, longitude];
     this.#map = L.map("mapid3", {worldCopyJump:true}).setView(coords, 8);
@@ -454,6 +641,7 @@ class App_auction_create_page {
     console.log("longitudeFormField: ", longitudeFormField);
     latitudeFormField.value = lat;
     longitudeFormField.value = lon;
+
   }
   
   _getCoordinates(e) {
@@ -672,7 +860,7 @@ class App_create_itinerary_page {
           e.preventDefault()
           console.log("hello from button");
           let auction_id = document.querySelector(".itinerary-page").id
-          const waypoint_url = `/auctions/${auction_id}/createwaypoint/`
+          const waypoint_url = `/voyages/${auction_id}/createwaypoint/`
           const fd = new FormData()
           let csrf = document.getElementsByName('csrfmiddlewaretoken')
           fd.append('csrfmiddlewaretoken', csrf[0].value)
@@ -699,9 +887,13 @@ class App_create_itinerary_page {
               success: function(response){
                   const sText = `Itinerary successfully created for this trip.`
                   handleAlerts1('success', sText)
-                  let auction_view_url = `/auctions/${auction_id}/`
-                  let auction_view_button = `<a href="${auction_view_url}" class="btn btn-primary btn-block" role="button" aria-pressed="true" id="auction-view-button" type="submit">Go To Trip</a>`
-                  // <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Primary link</a>
+                  let auction_view_url = `/voyages/${auction_id}/`
+                  let auction_view_button = `<a href="${auction_view_url}" class="btn btn-primary btn-block"
+                  style="box-shadow: rgba(3, 7, 59, 0.15) 0px -2px 5px 0px inset,
+                  rgba(3, 7, 59, 0.3) 0px -5px 9px 0px inset; 
+                  /* rgba(3, 7, 59, 0.4) 0px -7px 11px 0px inset; */
+                 border-radius: .9rem; font-weight: 700; border:none;" 
+                 role="button" aria-pressed="true" id="auction-view-button" type="submit">Go To Trip</a>`
 
                   let form = document.querySelector("#trip-confirm-form")
                   console.log("form",form);
@@ -729,7 +921,9 @@ class App_create_itinerary_page {
 if(document.querySelector(".main-page-container"))  {
     const app_main_page = new App_main_page();
     console.log("we are in the main page");
-}
+  }
+
+
 if(document.querySelector(".auction-detail-page"))  {
     const app_main_page = new App_auction_detail_page();
     console.log("we are in the auction detail page");
@@ -848,7 +1042,7 @@ if (updateBidForm){
     // AJAX FOR UPDATE BID
     $.ajax({
         type: 'POST',
-        url: window.location.origin+"/auctions/"+userbidID+ "/updatebid/",
+        url: window.location.origin+"/voyages/"+userbidID+ "/updatebid/",
         enctype: 'multipart/form-data',
         data: fd_update,
         success: function(response){
@@ -868,14 +1062,14 @@ if (updateBidForm){
 })
 }
 
-if(window.location.pathname == "/auctions/myauctions/"){
+if(window.location.pathname == "/voyages/myvoyages/"){
   console.log("WINDOW LOCATION:",window.location.pathname);
   
   let cardButtonsTopAll = document.querySelectorAll(".card-buttons-top")
   // let seeOnMapButtonsAll = document.querySelectorAll("#see-on-map-button")
   cardButtonsTopAll.forEach(card => {
     let editAuctionButton = `
-    <a href="${ window.location.origin +"/auctions/update/"+card.dataset.id}" class="btn btn-info" role="button" 
+    <a href="${ window.location.origin +"/voyages/update/"+card.dataset.id}" class="btn btn-info" role="button" 
                               aria-pressed="true">Edit</a>
     `
     let wholecard = card.closest(".card")
@@ -936,7 +1130,6 @@ const sendMessage = function (e) {
 }
 
 let sendMessageButtons = document.querySelectorAll(".send-message-button")
-console.log(sendMessageButtons)
 
 sendMessageButtons.forEach(button => {
   button.addEventListener("click",sendMessage )

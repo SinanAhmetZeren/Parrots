@@ -1,0 +1,194 @@
+{% extends "auction/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+
+
+        {% for vehicle in uservehicles %}
+        {% if not vehicle.vehicle_type == "WALK" %}
+          {% if not vehicle.vehicle_type == "RUN" %}
+
+          <div class="vehicle-profile-page single-vehicle-page">
+        
+
+                <!-- VEHICLE TEXT INFORMATION -->
+                <div class="vehicle-information-container">
+                        <div class="vehicle-name-type-capacity-owner">
+                                <div class="vehicle-info-box">
+                                        <div class="title">Name</div>
+                                        <div>{{vehicle.v_name}}</div>
+                                </div>
+                                <div class="vehicle-info-box">
+                                        <div  class="title">Type</div>
+                                        <div>{{vehicle.vehicle_type | lower |capfirst}}</div>
+                                </div>
+                                <div class="vehicle-info-box">
+                                        <div  class="title">Capacity</div>
+                                        <div>{{vehicle.v_capacity}}</div>
+                                </div>
+                                <div class="vehicle-info-box">
+                                        <div  class="title">Host</div>
+                                        <div>
+                                                <a 
+                                                class="btn btn-primary btn-sm" 
+                                                style="box-shadow: rgba(3, 7, 59, 0.15) 0px -2px 5px 0px inset,
+                                                rgba(3, 7, 59, 0.3) 0px -5px 9px 0px inset; 
+                                                /* rgba(3, 7, 59, 0.4) 0px -7px 11px 0px inset; */
+                                               border-radius: .9rem; font-weight: 700; border:none;; padding: 0.1rem 0.5rem;    font-weight: 700;
+                                                "
+                                                href="{% url 'public_profile' vehicle.v_owner %}">
+                                                {{vehicle.v_owner | upper |truncatechars:25}}</a>
+                                        </div>
+                                </div>
+                        </div>
+        
+                        <div class="vehicle-description-container">
+        
+                                <div class="vehicle-description-text">
+                                        <strong style="color: darkblue;">Description</strong>  
+                                        <br>
+                                        <br>
+        
+                                        {{vehicle.v_description | safe }}
+
+                                </div>
+                                
+                        </div>
+                <!-- VEHICLE TEXT INFORMATION -->
+        
+                <div class="vehicle-buttons-container">
+        
+                        <div class="vehicle-description-buttons">
+                                <a href="{% url 'auction:vehicle_update' vehicle.id %}" 
+                                class="btn btn-outline-success vehicle-description-button"
+                                style="font-weight: 700;"
+                                data-id="{{auction.id}}">Update Vehicle</a>
+
+                                <a href="{% url 'auction:vehicle_delete' vehicle.id %}" 
+                                class="btn btn-outline-danger vehicle-description-button"
+                                style="font-weight: 700;"
+                                data-id="{{auction.id}}">Delete Vehicle</a>
+                        </div>
+                        
+                </div>     
+        
+        
+                </div>
+          
+        
+        <!-- VEHICLE IMAGES FROM HERE -->
+        <div class="vehicle-image-container-all" style="height: 65vh; width: 40rem;">
+                                
+                <div id="carouselExampleIndicators{{ forloop.counter }}" 
+                style="position: relative; opacity: 1; transform:scale(1);"  
+                class=" carousel slide " data-ride="carousel">
+
+                        <div class="carousel-inner" >
+                                <div class="carousel-item active" 
+                                style="width: 40rem; height: 35rem;" >
+
+                                        <img class="d-block w-100" 
+                                        style="height: 100%; width: 100%; object-fit: cover;
+
+                                        " 
+                                        src="{{vehicle.v_image.url}}" alt="First slide">
+                                        
+                                </div>
+
+                                {% if not vehicle.v_image2.url == "/media/defaultVehicle.jpg" %}
+                                <div class="carousel-item" 
+                                style="width: 40rem; height: 35rem;" >
+                                        <img class="d-block w-100"
+                                        style="height: 100%; width: 100%; object-fit: cover;" 
+                                        src="{{vehicle.v_image2.url}}" alt="Second slide">
+                                </div>
+                                {% endif %}
+
+                                {% if not vehicle.v_image3.url == "/media/defaultVehicle.jpg" %}
+                                <div class="carousel-item" 
+                                style="width: 40rem; height: 35rem;" >
+                                        <img class="d-block w-100" 
+                                        style="height: 100%; width: 100%; object-fit: cover;" 
+                                        src="{{vehicle.v_image3.url}}" alt="Third slide">
+                                </div>
+                                {% endif %}
+
+                                {% if not vehicle.v_image4.url == "/media/defaultVehicle.jpg" %}
+                                <div class="carousel-item" 
+                                style="width: 40rem; height: 35rem;" >
+                                        <img class="d-block w-100" 
+                                        style="height: 100%; width: 100%; object-fit: cover;" 
+                                        src="{{vehicle.v_image4.url}}" alt="Fourth slide">
+                                </div>
+                                {% endif %}
+
+                                {% if not vehicle.v_image5.url == "/media/defaultVehicle.jpg" %}
+                                <div class="carousel-item" 
+                                style="width: 40rem; height: 35rem;" >
+                                        <img class="d-block w-100" 
+                                        style="height: 100%; width: 100%; object-fit: cover;" 
+                                        src="{{vehicle.v_image5.url}}" alt="Fifth slide">
+                                </div>
+                                {% endif %}
+
+                                {% if not vehicle.v_image6.url == "/media/defaultVehicle.jpg" %}
+                                <div class="carousel-item" 
+                                style="width: 40rem; height: 35rem;" >
+                                        <img class="d-block w-100" 
+                                        style="height: 100%; width: 100%; object-fit: cover;" 
+                                        src="{{vehicle.v_image6.url}}" alt="Sixth slide">
+                                </div>
+                                {% endif %}
+                                
+                                {% if not vehicle.v_image7.url == "/media/defaultVehicle.jpg" %}
+                                <div class="carousel-item" 
+                                style="width: 40rem; height: 35rem;" >
+                                        <img class="d-block w-100" 
+                                        style="height: 100%; width: 100%; object-fit: cover;" 
+                                        src="{{vehicle.v_image7.url}}" alt="Sixth slide">
+                                </div>
+                                {% endif %}
+                                
+                                {% if not vehicle.v_image8.url == "/media/defaultVehicle.jpg" %}
+                                <div class="carousel-item" 
+                                style="width: 40rem; height: 35rem;" >
+                                        <img class="d-block w-100" 
+                                        style="height: 100%; width: 100%; object-fit: cover;" 
+                                        src="{{vehicle.v_image8.url}}" alt="Sixth slide">
+                                </div>
+                                {% endif %}
+                        </div>
+
+                         {% if not vehicle.v_image2.url == "/media/defaultVehicle.jpg" %} 
+
+                        <a class="carousel-control-prev" style="transform: translateY(50%) scale(1.5)  translateX(-60%);" href="#carouselExampleIndicators{{ forloop.counter }}" role="button" data-slide="prev">
+                                <span class="" aria-hidden="true">
+                                        <img src="/static/arrow.png" height="20px" style="transform: rotate(180deg);" alt="">
+                                </span>
+                                <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" style="transform: translateY(50%) scale(1.5)  translateX(60%)" href="#carouselExampleIndicators{{ forloop.counter }}" role="button" data-slide="next">
+                                <span class="" aria-hidden="true">
+                                        <img src="/static/arrow.png" height="20px" alt="">
+                                </span>
+                                <span class="sr-only">Next</span>
+                        </a>
+                        {% endif %}
+
+
+                </div>                        
+        </div>
+        <!-- VEHICLE IMAGES TO HERE -->
+        </div>
+
+          
+               
+        {% endif %}
+        {% endif %}
+        <br>
+        {% endfor %}
+
+
+
+{% endblock content %}

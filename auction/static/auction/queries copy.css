@@ -1,0 +1,324 @@
+/* rem and em do NOT depend on html font-size in media queries! Instead, 1rem = 1em = 16px */
+
+/**************************/
+/* BELOW 1344px (Smaller desktops) */
+/**************************/
+
+@media (max-width: 84em) {
+}
+
+/**************************/
+/* BELOW 1200px (Landscape Tablets) */
+/**************************/
+  
+@media (max-width: 75em) {
+html {
+    /* 9px / 16px  */
+    font-size: 56.25%;
+    /* transform: rotate(90deg) */
+
+}
+
+.slider {
+    transform: scale(1.15);
+    height: 31rem;}
+
+.slide-card{
+    margin: 2rem auto;
+}
+
+.user-contact-details {
+    margin: 3rem 0 0 0;
+}
+
+.date-input{
+    width: 87%;
+    justify-self: right;
+    margin-right: 0.4rem;
+}
+.date-input2{
+    width: 89%;
+    justify-self: right;
+    margin-right: 0.0rem;
+}
+
+
+
+}
+  
+
+
+
+
+
+/**************************/
+/* BELOW 944px (Tablets) */
+/**************************/
+
+@media (max-width: 59em) {
+html {
+    /* 8px / 16px = 0.5 = 50% */
+    font-size: 50%;
+}
+
+.slider {
+    transform: scale(1.15);
+    height: 31rem;}
+
+.slide-card{
+    margin: 2rem auto;
+}
+
+.user-contact-details {
+    margin: 3rem 0 0 0;
+}
+
+.date-input{
+    width: 89%;
+    justify-self: right;
+    margin-right: 0.2rem;
+}
+.date-input2{
+    width: 89%;
+    justify-self: right;
+    margin-right: 0.0rem;
+}
+
+}
+  
+
+/**************************/
+/* BELOW 840px (Tablets) */
+/**************************/
+
+@media (max-width: 53em) {
+html {
+    font-size: 48%;
+}
+
+.slider {
+    transform: scale(1.15);
+    height: 31rem;}
+
+.slide-card{
+    margin: 2rem auto;
+}
+
+.user-contact-details {
+    margin: 3rem 0 0 0;
+}
+
+.date-input{
+    width: 98%;
+    justify-self: right;
+    margin-right: 0.2rem;
+}
+.date-input2{
+    width: 99%;
+    justify-self: right;
+    margin-right: 0.0rem;
+}
+.popup-card{
+    transform: translateX(50%)  scale(1.2);
+}
+
+.leaflet-container a.leaflet-popup-close-button{
+    transform: translateX(-6rem) translateY(-1rem);
+}
+}
+
+
+/**************************/
+/* BELOW 750px (Smaller tablets) */
+/**************************/
+
+@media (max-width: 47em) {
+    html{
+        font-size: 47%;
+        }
+    
+    .main-page-container{
+        grid-template-columns: 2fr 5fr;
+    }
+    
+    .dashboard {
+        width: 33rem;
+    }
+    
+    .slider {
+        transform: scale(1.1);
+        height: 31rem;
+        margin-top: 6rem;
+    }
+    
+    .slide-card{
+        margin: 0rem auto;
+    }
+    
+    .user-contact-details {
+        margin: 3rem 0 0 0;
+    }
+    
+    .date-input{
+        width: 80%;
+        justify-self: right;
+        margin-right: 0.4rem;
+    }
+    .date-input2{
+        width: 80%;
+        justify-self: right;
+        margin-right: 0.0rem;
+    }
+    
+    .date-label {
+        width: 1.3rem;
+    }
+    .date-label1 {
+        width: .5rem;
+    }
+    .popup-card{
+        transform: translateX(50%)  scale(1.2);
+    }
+    
+    .leaflet-container a.leaflet-popup-close-button{
+        transform: translateX(-6rem) translateY(-1rem);
+    }
+
+    .add-new-auction{
+        transform: scale(1.2);
+    }
+
+    }
+
+
+
+/**************************/
+/* BELOW 704px (Smaller tablets) */
+/**************************/
+
+@media (max-width: 44em) {
+html{
+    font-size: 45%;
+    }
+
+.main-page-container{
+    grid-template-columns: 2fr 5fr;
+}
+
+.dashboard {
+    width: 33rem;
+}
+
+.slider {
+    transform: scale(1.1);
+    height: 27rem;
+    margin-top: 4rem;
+}
+
+.slide-card{
+    margin: 0rem auto;
+}
+
+.user-contact-details {
+    margin: 3rem 0 0 0;
+}
+
+.date-input{
+    width: 80%;
+    justify-self: right;
+    margin-right: 0.4rem;
+}
+.date-input2{
+    width: 80%;
+    justify-self: right;
+    margin-right: 0.0rem;
+}
+
+.date-label {
+    width: 1.3rem;
+}
+.date-label1 {
+    width: .5rem;
+}
+.popup-card{
+    transform: translateX(50%)  scale(1.2);
+}
+
+.leaflet-container a.leaflet-popup-close-button{
+    transform: translateX(-6rem) translateY(-1rem);
+}
+
+}
+  
+/**************************/
+/* BELOW 570px (Phones) */
+/**************************/
+
+@media (max-width: 36em) {
+    html{
+        font-size: 39%;
+        }
+    
+    .main-page-container{
+        grid-template-columns: 2fr 5fr;
+    }
+    
+    .dashboard {
+        width: 33rem;
+    }
+    
+    .slider {
+        transform: scale(1.1);
+        height: 27rem;
+    }
+    
+    .slide-card{
+        margin: 0rem auto;
+    }
+    
+    .user-contact-details {
+        margin: 3rem 0 0 0;
+    }
+    
+    .date-input{
+        width: 75%;
+        justify-self: right;
+        margin-right: 0.4rem;
+    }
+    .date-input2{
+        width: 75%;
+        justify-self: right;
+        margin-right: 0rem;
+    }
+    
+    .date-label {
+        width: .3rem;
+    }
+    .date-label1 {
+        width: 0rem;
+    }
+    .vacancy-selector{
+        margin-left: 0.2rem;
+    }
+    .add-new-auction{
+        margin-top: 2rem;
+        transform: scale(1.15);
+    }
+    .popup-card{
+        transform: translateX(70%) scale(1.2);
+        
+    }
+     
+    .leaflet-container a.leaflet-popup-close-button{
+        transform: translateX(-8rem) translateY(-1rem);
+    }
+}
+  
+/* 
+- Font sizes (px)
+10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98
+
+- Spacing system (px)
+2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 / 128
+*/
+  

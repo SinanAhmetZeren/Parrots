@@ -2,50 +2,217 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-    <div class="content-section  user-page">
 
-      <div class="profile-section-all">
-        <div class="profile-image-section">
-          <img class="profile-image" src="{{ user.profile.image.url }}">
+
+<div class="public-profile-page profile-page">
+  
+  
+<!-- PROFILE IMAGE AND CONTACT INFORMATION  -->
+  <div class="user-image-and-info">
+    <!-- PROFILE IMAGE -->
+    <div class="user-image">
+        <img class="user-image-img" src="{{ user.profile.image.url }}" alt="">
+        <div class="profile-info">
+          <h5 class="profile-text">{{ user.profile.profile_info |safe }}</h5>
         </div>
+    </div>
 
-          <div class="profile-information-section">
-          <div class="profile-info-item mt-3" class="social-image"><img class="social-img" src="/static/user.png" alt=""></div>
-          <div class="profile-info-item">{{ user.username }}</div>
+    <!-- CONTACT DETAILS -->
+    <div class="user-contact-details">
 
-          <div class="profile-info-item mt-3" class="social-image"><img class="social-img" src="/static/email.png" alt=""></div>
-          <div class="profile-info-item">{{ user.email }}</div>
-          <div class="profile-info-item mt-3" class="social-image"><img class="social-img" src="/static/facebook.jpg" alt=""></div>
-          <div class="profile-info-item" > {% if user.profile.facebook %}{{ user.profile.facebook|truncatechars:50 }}{% else %} &nbsp {% endif %} </div>
-          <div class="profile-info-item mt-3" class="social-image"><img class="social-img" src="/static/instagram.png" alt=""></div>
-          <div class="profile-info-item"> {% if user.profile.instagram %}{{ user.profile.instagram|truncatechars:50 }}  {% else %}  &nbsp {% endif %}</div>
-          <div></div>
-          <div></div>
+      <div class="user-contact-line">
+        <div class="profile-page-icon"><img class="social-img" src="/static/user.png" alt=""></div>
+        <div class="profile-page-data">
+          Public Profile:
+          <a class="btn btn-primary btn-sm px-2 pt-1 pb-1" 
+          style="box-shadow: rgba(3, 7, 59, 0.15) 0px -2px 5px 0px inset,
+          rgba(3, 7, 59, 0.3) 0px -5px 9px 0px inset; 
+          /* rgba(3, 7, 59, 0.4) 0px -7px 11px 0px inset; */
+         border-radius: .9rem; font-weight: 700; border:none;
+         "
+          href="{% url 'public_profile' user.username %}"> {{ user.username | title|truncatechars:30}}</a>
+
+
 
         </div>
       </div>
-
-      <div class="users-vehicles">
-      {{user.username | upper}}'s vehicles:  <br>
-      {% for vehicle in user.vehicle_set.all %}
-        <a href="{% url 'auction:vehicle_detail' vehicle.id %}" class="btn btn-primary active" role="button" aria-pressed="true">{{vehicle.v_name}} </a>
-      {% endfor %}
-      <a href="{% url 'auction:vehicle_create' %}" class="btn btn-success active" role="button" aria-pressed="true">Register New Vehicle </a>
+      <div class="user-contact-line">
+        <div class="profile-page-icon"><img class="social-img" src="/static/email.png" alt=""></div>
+        <div class="profile-page-data">{% if user.profile.email %}{{ user.profile.email }}{% else %} &nbsp {% endif %}</div>
+      </div>
+      <div class="user-contact-line">
+        <div class="profile-page-icon"><img class="social-img" src="/static/phone.png" alt=""></div>
+        <div class="profile-page-data">{% if user.profile.phone %}{{ user.profile.phone }}{% else %} &nbsp {% endif %}</div>
+      </div>
+      <div class="user-contact-line">
+        <div class="profile-page-icon"><img class="social-img" src="/static/facebook.jpg" alt=""></div>
+        <div class="profile-page-data"> {% if user.profile.facebook %}{{ user.profile.facebook|truncatechars:50 }} {% else %} &nbsp {% endif %} </div>
+      </div>
+      <div class="user-contact-line">
+        <div class="profile-page-icon"><img class="social-img" src="/static/instagram.png" alt=""></div>
+        <div class="profile-page-data">{% if user.profile.instagram %}{{ user.profile.instagram|truncatechars:50 }}  {% else %} &nbsp  {% endif %}</div>          
+      </div>
+      <div class="user-contact-line" style="width: 70%; margin: 0 auto;">
+        <div class="profile-page-icon">
+        </div>
+        <div class="profile-page-data" style="color: darkred;">
+          <img class="social-img" src="/static/arrow.png" style="transform: rotate(90deg) scale(0.7); " alt="">         
+          <span> Add/Edit Profile Details </span>
+          <img class="social-img" src="/static/arrow.png" style="transform: rotate(90deg) scale(0.7);" alt=""></div>          
+      </div>
 
     </div>
+  </div>
+<!-- PROFILE IMAGE AND CONTACT INFORMATION  -->
+
+
+
+
+<!-- USER'S VEHICLES -->
+
+  <div class="user-vehicles">
+
+    {% if user.vehicle_set.count > 2  %}
+
+
+      <div>
+        <h4 style="color: white; margin-left: 2rem;">Vehicles
+          <a href="{% url 'auction:myvehicles' %}" class="btn btn-primary" 
+          style="box-shadow: rgba(3, 7, 59, 0.15) 0px -2px 5px 0px inset,
+          rgba(3, 7, 59, 0.3) 0px -5px 9px 0px inset; 
+          /* rgba(3, 7, 59, 0.4) 0px -7px 11px 0px inset; */
+          border-radius: .9rem; font-weight: 700; border:none;
+          margin-left: 1.7rem;"
+          role="button" aria-pressed="true" 
+          id="auction-view-button" type="submit">Vehicles View</a>
+        </h4>
+
+        {% for vehicle in user.vehicle_set.all %}
+          {% if not vehicle.vehicle_type == "WALK" %}
+            {% if not vehicle.vehicle_type == "RUN" %}
+          <div class="vehicle-line"> 
+            <div class="vehicle-icon">
+              <img src="{{vehicle.v_image.url}}" alt="">
+            </div>
+            <div>
+              <span style="color: #0069D9;">{{vehicle.v_name | title |truncatechars:24}}
+              </span>
+                </div>
+            
+            <div>{{vehicle.vehicle_type |title}} for {{vehicle.v_capacity}} persons</div>
+            <div>
+              <a href="{% url 'auction:vehicle_detail' vehicle.id %}" 
+              class="btn" 
+                  style="
+                    border-radius: .9rem;    font-weight: 700;font-size: 1.2rem;" 
+             role="button" aria-pressed="true">🔎</a>
+            </div>
+          </div>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      
+
+      </div>
+
+    {% endif %}
+
+    <!-- </div> -->
+<!-- USER'S VEHICLES -->
+
+
+
+
+<!-- USER'S VOYAGES -->
+    <br>
+
+    <h4 id="voyages" style="color: white; margin-left: 2rem;"></h4>
+
+
+          {% for vehicle in user.vehicle_set.all %}
+              {% for auction in vehicle.auction_set.all %}
+              <div class="voyage-line">
+                  <div class="voyage-icon">
+                    <img src="{{auction.auctionImage.url}}" alt="">
+                  </div>
+                  <div>
+                    <span style="color: #0069D9;">{{ auction.auction_title | title |truncatechars:24}}
+                    </span>
+                     
+                     <!-- for 
+                    <span style="color: #0069D9;">{{ auction.vacancy }} 
+                    </span>
+                    people  -->
+                    {% if auction.vehicle.vehicle_type == "WALK" %}
+                      by
+                    {% endif %}
+                    {% if auction.vehicle.vehicle_type == "RUN" %}
+                    by
+                    {% endif %}
+                    {% if not auction.vehicle.vehicle_type == "WALK" %}
+                    {% if not auction.vehicle.vehicle_type == "RUN" %}
+                    on 
+                    {% endif %}
+                    {% endif %}
+                    <span style="color: #0069D9">{{ auction.vehicle.v_name | title |truncatechars:18}}
+                    </span>
+                    from 
+                    <span style="color: #0069D9;">{{ auction.trip_startDate |date:"M d, y"}}
+                    </span>
+                    to
+                    <span style="color: #0069D9;">{{ auction.trip_endDate |date:"M d, y" }}
+                    </span>
+
+                  </div>
+ 
+                 <div><a href="{% url 'auction:view_auction' auction.id %}" 
+                  class="btn" 
+                  style="
+                    border-radius: .9rem;    font-weight: 700;font-size: 1.2rem;" 
+                  role="button" 
+                  aria-pressed="true">🔎 </a>
+                </div>
+              
+              </div>
+              {% endfor %}
+          {% endfor %}
+  </div>
+  <!-- USER'S VOYAGES -->
+
+</div>
+
+
+
+
+
+    <div class="user-update-forms profile-form" 
+    style="background-color:rgba(255, 255, 255, 0.801);  border-radius: 2rem;">
+
 
       <form method="POST" enctype="multipart/form-data">
           {% csrf_token %}
-          <fieldset class="form-group profile-update-form"  >
+          <fieldset class="form-group"  >
               {{ u_form|crispy }}
-              {{ p_form|crispy }}
+              {{ p_form2|crispy }}
+              <!-- {{ p_form|crispy }} -->
               <div class="form-group">
-                <button class="btn btn-info" type="submit">Update</button>
+                <button class="btn btn-info"   style="box-shadow: rgba(3, 7, 59, 0.15) 0px -2px 5px 0px inset,
+                rgba(3, 7, 59, 0.3) 0px -5px 9px 0px inset; 
+                /* rgba(3, 7, 59, 0.4) 0px -7px 11px 0px inset; */
+               border-radius: .9rem; font-weight: 700; border:none;
+               " type="submit">Update</button>
             </div>
           </fieldset>
 
       </form>
 
+
+      
+
+<div style="width: 400px;"> 
+  {{ p_form2.media }}
+  
+</div>
     </div>
 
 {% endblock content %}

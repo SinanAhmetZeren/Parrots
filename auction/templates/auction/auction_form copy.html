@@ -1,0 +1,189 @@
+{% extends "./base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %} <title> Create Auction </title> {% endblock %}
+
+
+{% block content %}
+
+
+
+
+<div class="auction-form-page">
+    <div class="auction-form-content-section" >
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <!-- {{ form|crispy  -->
+
+                        <!-- VEHICLE SELECTOR -->
+                <div id="div_id_vehicle" class="form-group auction-form-field"> 
+                    <label for="id_vehicle" class=" requiredField">
+                        Vehicle &nbsp<span class="asteriskField">*</span> 
+                    </label> 
+                    <div class=""> 
+                        <select name="vehicle" class="select form-control" required="" id="id_vehicle"> 
+                            <option value="" selected="">Registered Vehicles</option> 
+                            {% for vehicle in user.vehicle_set.all %}
+                            <option value="{{vehicle.id}}">{{vehicle.v_name}}</option> 
+                            {% endfor %}
+                        </select> 
+                    </div>   
+                </div>
+
+                    <!-- TITLE SELECTOR -->
+                    <div id="id_auction_title" class="form-group auction-form-field"> 
+                        <label for="id_auction_title" class=" requiredField">
+                            Voyage Name &nbsp<span class="asteriskField">*</span> 
+                        </label> 
+                        <div class=""> 
+                            <input type="text"  name="auction_title" class="numberinput form-control" required="" id="id_auction_title"> 
+                        </div> 
+                    </div> 
+
+                <!-- TRIP DETAILS FIELD -->
+                <div id="div_id_tripDetails" class="form-group auction-form-field"> 
+                    <label for="id_tripDetails" class=" requiredField">
+                        Voyage Details &nbsp<span class="asteriskField">*</span> 
+                    </label> 
+
+                    <div class="django-ckeditor-widget" data-field-id="id_tripDetails" 
+                    style="display: inline-block;"> 
+                    
+                    <textarea class="ckeditorwidget form-control is-invalid" 
+                    cols="40" id="id_tripDetails" maxlength="3000" name="tripDetails" rows="10" required="" 
+                    data-processed="0" data-config="{&quot;skin&quot;: &quot;moono-lisa&quot;, &quot;toolbar_Basic&quot;: [[&quot;Source&quot;, &quot;-&quot;, &quot;Bold&quot;, &quot;Italic&quot;]], &quot;toolbar_Full&quot;: [[&quot;Styles&quot;, &quot;Format&quot;, &quot;Bold&quot;, &quot;Italic&quot;, &quot;Underline&quot;, &quot;Strike&quot;, &quot;SpellChecker&quot;, &quot;Undo&quot;, &quot;Redo&quot;], [&quot;Link&quot;, &quot;Unlink&quot;, &quot;Anchor&quot;], [&quot;Image&quot;, &quot;Flash&quot;, &quot;Table&quot;, &quot;HorizontalRule&quot;], [&quot;TextColor&quot;, &quot;BGColor&quot;], [&quot;Smiley&quot;, &quot;SpecialChar&quot;], [&quot;Source&quot;]], &quot;toolbar&quot;: &quot;Full&quot;, &quot;height&quot;: 291, &quot;width&quot;: 835, &quot;filebrowserWindowWidth&quot;: 940, &quot;filebrowserWindowHeight&quot;: 725, &quot;language&quot;: &quot;en-us&quot;}" data-external-plugin-resources="[]" data-id="id_tripDetails" data-type="ckeditortype" style="margin-top: 0px; margin-bottom: 0px; height: 421px;">
+                    </textarea>
+                    <!-- <div> 
+                        {{ form.media }}
+                    </div> -->
+                    
+
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+    
+
+                <!-- VACANCY SELECTOR -->
+                <div id="div_id_vacancy" class="form-group auction-form-field"> 
+                    <label for="id_vacancy" class=" requiredField">
+                        Vacancy &nbsp<span class="asteriskField">*</span> 
+                    </label> 
+                    <div class=""> 
+                        <input type="number" placeholder="How many persons can you host?" name="vacancy" class="numberinput form-control" required="" id="id_vacancy"> 
+                    </div> 
+                </div> 
+                
+                <!-- LATITUDE AND LONGITUDE -> JAVASCRIPT WILL FILL FORM WHEN CLICKED ON MAP -->
+                <div id="div_id_Latitude" class="form-group auction-form-field"> 
+                    <label for="id_Latitude" class=" requiredField">
+                        Latitude &nbsp<span class="asteriskField">*</span> 
+                    </label> 
+                    <div class=""> 
+                        <input type="number" placeholder="click on map for starting location" name="Latitude" step="any" class="numberinput form-control" required="" id="id_Latitude"> 
+                    </div> 
+                </div> 
+
+                <div id="div_id_Longitude" class="form-group auction-form-field"> 
+                    <label for="id_Longitude" class=" requiredField">
+                        Longitude &nbsp<span class="asteriskField">*</span> 
+                    </label> 
+                    
+                    <div class=""> 
+                        <input type="number" placeholder="click on map for starting location" name="Longitude" step="any" class="numberinput form-control" required="" id="id_Longitude"> 
+                    </div> 
+                </div> 
+
+
+                <!-- STARTDATE SELECTOR -->
+                <div id="div_id_trip_startDate" class="form-group auction-form-field"> 
+                    <label for="id_trip_startDate" class=" requiredField">
+                        Voyage Start Date &nbsp<span class="asteriskField">*</span> 
+                    </label> 
+                    <div class=""> 
+                        <input type="date" name="trip_startDate" class="datetimeinput form-control" required="" id="id_trip_startDate"> 
+                    </div> 
+                </div>
+
+                <!-- ENDDATE SELECTOR -->
+                <div id="div_id_trip_endDate" class="form-group auction-form-field"> 
+                    <label for="id_endDate" class=" requiredField">
+                        Voyage End Date &nbsp<span class="asteriskField">*</span> 
+                    </label> 
+                    <div class=""> 
+                        <input type="date" name="trip_endDate" class="datetimeinput form-control" required="" id="id_trip_endDate"> 
+                    </div> 
+                </div> 
+
+
+                <div id="div_id_auctionEndDate" class="form-group auction-form-field"> 
+                    <label for="id_auctionEndDate" class=" requiredField">
+                        Latest Bid Date &nbsp<span class="asteriskField">*</span> 
+                    </label> 
+                    <div class=""> 
+                        <input type="date" name="auctionEndDate" class="datetimeinput form-control" required="" id="id_auctionEndDate"> 
+                    </div> 
+                </div>
+
+                <div id="div_id_auctionEndDate" class="form-group auction-form-field"> 
+                    <label for="id_minPrice" class="requiredField">
+                        Min. Price (€) &nbsp<span class="asteriskField">*</span> 
+                    </label> 
+                    <div class=""> 
+                        <input type="number" name="minPrice" class="datetimeinput form-control" id="id_minPrice"> 
+                    </div> 
+                </div>
+
+                <div id="div_id_auctionImage" class="form-group auction-form-field"> 
+                    <label for="id_auctionImage" class=" requiredField" style="display: inline-block;">
+                        Voyage Image &nbsp<span class="asteriskField">*</span> 
+                    </label> 
+                    <div class="" style="display: inline-block;"> 
+                        <input type="file" name="auctionImage" accept="image/*" class="clearablefileinput form-control-file" id="id_auctionImage"> 
+                    
+                    </div> 
+
+                </div>
+                <div class="form-group auction-form-field" style="display: inline-block;" >
+                    <!-- <a href="{% url 'auction:vehicle_create' %}" class="btn btn-success" role="button" 
+                    aria-pressed="true">Register New Vehicle </a>   -->
+                    <button class="btn btn-primary" 
+                    style=" box-shadow: rgba(64, 204, 223, 0.33) 0px -2px 5px 0px inset, 
+                    rgba(64, 204, 223, 0.5) 0px -2px 9px 0px inset, 
+                    rgba(64, 204, 223, 0.7) 0px -3px 11px 0px inset;
+                   border-radius: .9rem;" id="create-form-button" type="submit">Create Itinerary</button>
+
+
+                </div>
+            </fieldset>
+            <!-- <div class="form-group" >
+                <button class="btn btn-primary" type="submit">Create Itinerary</button>
+            </div> -->
+        </form>
+    </div>
+
+    <div class="map-section-auction-form-page" >
+        <div class="mapid3" id="mapid3" data-latitude="" data-longitude=""></div>
+    </div>
+</div>
+
+
+
+<div style="width: 400px;"> 
+    {{ form.media }}
+    
+</div>
+
+
+{% endblock content %}
+
+

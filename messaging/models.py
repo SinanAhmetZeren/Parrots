@@ -8,7 +8,7 @@ class Message(models.Model):
     sent_by = models.ForeignKey(User, related_name='sent_by',on_delete=models.CASCADE)
     received_by = models.ForeignKey(User, related_name='received_by', on_delete=models.CASCADE)
     createdDate = DateTimeField(auto_now_add=True)
-    message_text = TextField(max_length=500)
+    message_text = TextField(max_length=1500)
     unread = BooleanField(default=True)
 
     class Meta:

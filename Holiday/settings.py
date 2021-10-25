@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# SECURE_SSL_REDIRECT = True
 
 # Application definition
 
@@ -44,6 +45,8 @@ INSTALLED_APPS = [
     "chat",
     "messaging",
     "django.contrib.humanize",
+    "ckeditor",
+
 ]
 
 MIDDLEWARE = [

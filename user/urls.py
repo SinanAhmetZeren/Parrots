@@ -17,7 +17,7 @@ urlpatterns = [
 
     # PROFILE
     path('profile/', views.profile, name='profile'),
-    path('public_profile/<str:username>', views.publicProfile.as_view(template_name ="user/public_profile.html"), name='public_profile'),
+    path('pprofile/<str:username>', views.publicProfile.as_view(template_name ="user/public_profile.html"), name='public_profile'),
 
     # path('authorarticles/<str:username>', views.authorArticlesView.as_view(), name = "authorArticles" ),
 

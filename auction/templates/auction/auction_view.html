@@ -4,6 +4,7 @@
 <!-- originally AUCTION DETAIL page -->
 <!-- called by view_auction -->
 <!-- auctions/<pk> -->
+    {% load humanize %}
 
 {% load static %}
 {% block title %} <title> Auction Detail </title> {% endblock %}
@@ -34,7 +35,7 @@
                                 <!-- <a href="#" class="btn btn-outline-info btn-sm  px-2" role="button" aria-pressed="true">
                                     {{object.vacancy}}
                                 </a> persons  -->
-                                <span class="text-primary">{{object.vacancy}}</span> persons
+                                <span class="text-primary">{{object.vacancy|intcomma }}</span> persons
                             </div>
 
                             <div class="auction-card-box">
@@ -42,9 +43,28 @@
                             </div>
 
                             <div class="auction-card-box">
-                                <a href="{% url 'auction:vehicle_detail' object.vehicle.id %}" class="btn btn-primary btn-sm px-2" role="button" aria-pressed="true">
-                                    {{object.vehicle.v_name| upper|slice:":18"}}
-                                </a> 
+                                {% if not object.vehicle.vehicle_type == "WALK" %}
+                                    {% if not object.vehicle.vehicle_type == "RUN" %}
+                                        <a href="{% url 'auction:vehicle_detail' object.vehicle.id %}" 
+                                        class="btn btn-primary btn-sm px-2" 
+                                        style="box-shadow: rgba(3, 7, 59, 0.15) 0px -2px 5px 0px inset,
+                                        rgba(3, 7, 59, 0.3) 0px -5px 9px 0px inset; 
+                                        /* rgba(3, 7, 59, 0.4) 0px -7px 11px 0px inset; */
+                                       border-radius: .9rem; font-weight: 700; border:none;" role="button" aria-pressed="true">
+                                            {{ object.vehicle.v_name| upper|slice:":18" }} 
+                                        </a> 
+
+                                    {% endif %}
+                                {% endif %}
+
+                                {% if object.vehicle.vehicle_type == "WALK" %}
+                                        <span class="text-primary">WALK</span> 
+                                {% endif %}
+
+                                {% if object.vehicle.vehicle_type == "RUN" %}
+                                        <span class="text-primary">RUN</span> 
+                                {% endif %}
+
                             </div>    
                                 
                             <div class="auction-card-box">
@@ -52,7 +72,13 @@
                             </div>   
                                 
                             <div class="auction-card-box">
-                                <a href="{% url 'public_profile' object.vehicle.v_owner.username %}" class="btn btn-primary btn-sm px-2" role="button" aria-pressed="true">
+                                <a href="{% url 'public_profile' object.vehicle.v_owner.username %}" 
+                                class="btn btn-primary btn-sm px-2" 
+                                style="box-shadow: rgba(3, 7, 59, 0.15) 0px -2px 5px 0px inset,
+                                rgba(3, 7, 59, 0.3) 0px -5px 9px 0px inset; 
+                                /* rgba(3, 7, 59, 0.4) 0px -7px 11px 0px inset; */
+                               border-radius: .9rem; font-weight: 700; border:none;"
+                                role="button" aria-pressed="true">
                                     {{object.vehicle.v_owner| upper|slice:":18"}}
                                 </a> 
                             </div>
@@ -87,6 +113,22 @@
 
                             </div>
                        
+                            <div class="auction-card-box">
+                                Min. Price: 
+                            </div>
+
+                            <div class="auction-card-box">
+
+                                {% if object.minPrice %}
+                                <span class="text-primary">{{object.minPrice|intcomma }} €</span> 
+                                {% else %}
+                                <span class="text-primary">Optional</span> 
+                                {% endif %}
+
+
+                            </div>
+
+
                         </div>
                     </li>
             </ul>       
@@ -103,18 +145,28 @@
                                     
                                 </div>
                                 <div class="bid-amount">
-                                    <a href="{% url 'public_profile' bid.user.username %}" class="btn btn-outline-primary btn-sm px-2" role="button" aria-pressed="true">
+                                    <a href="{% url 'public_profile' bid.user.username %}" 
+                                    style="box-shadow: rgba(3, 7, 59, 0.15) 0px -2px 5px 0px inset,
+                                    rgba(3, 7, 59, 0.3) 0px -5px 9px 0px inset; 
+                                    /* rgba(3, 7, 59, 0.4) 0px -7px 11px 0px inset; */
+                                   border-radius: .9rem; font-weight: 700; border:none;"
+                                    class="btn btn-primary btn-sm px-2" role="button" aria-pressed="true">
                                         {{bid.user.username|slice:":18"}}
                                     </a> 
-                                     bid <strong> €{{bid.price}}</strong>, 
-                                    <br> {{bid.bidCreated|timesince}} ago
+                                     placed a bid of <strong class="text-primary"> €{{bid.price}}</strong>, 
+                                    {{bid.bidCreated|timesince}} ago
+
                                     {% if object.vehicle.v_owner == user %}
-                                    
-                                    <button type="button" class="btn btn-outline-success btn-sm px-2" 
+                                    <button type="button" class="btn btn-success btn-sm px-2" 
+                                    style="box-shadow: rgba(8, 48, 2, 0.15) 0px -2px 5px 0px inset,
+                                    rgba(8, 48, 2, 0.3) 0px -5px 9px 0px inset; 
+                                    /* rgba(8, 48, 2, 0.4) 0px -7px 11px 0px inset; */
+                                   border-radius: .9rem; font-weight: 700; border:none;"
                                     data-container="body" data-toggle="popover" data-placement="bottom"
                                     data-content="{{bid.introduction}}">
                                     Message</button>
                                     {% endif %}
+
                                 </div>
 
                             </div>
@@ -128,7 +180,11 @@
             <!-- IF USER HAS A BID FOR THIS AUCTION, DISPLAY THE CHANGE BID BUTTON -->
                     {% for bid in object.bid_set.all %}
                         {% if bid.user == user %}
-                            <button class="btn btn-primary btn-lg btn-block change-bid-button hidden" type="button" data-toggle="modal" data-target="#exampleModalCenter" >Change Bid</button>
+                            <button class="btn btn-primary btn-lg btn-block change-bid-button hidden" 
+                            style="box-shadow: rgba(3, 7, 59, 0.15) 0px -2px 5px 0px inset,
+                            rgba(3, 7, 59, 0.3) 0px -5px 9px 0px inset; 
+                            /* rgba(3, 7, 59, 0.4) 0px -7px 11px 0px inset; */
+                           border-radius: .9rem; font-weight: 700; border:none;" type="button" data-toggle="modal" data-target="#exampleModalCenter" >Change Bid</button>
                                 <!-- change bid button -->
 
                             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -170,8 +226,16 @@
         
                 
         <!-- IF THE USER HAS NO BID YET, RENDER NEW BID BUTTON, BUT INITIALLY HIDDEN.  JS WILL SHOW. -->
-                    <button class="btn btn-primary btn-lg btn-block new-bid  new-bid-button hidden" type="button" data-toggle="modal" data-target="#exampleModalCenter" >New Bid</button>
+                {% if request.user.is_authenticated %}    
+        
+                <button class="btn btn-primary btn-lg btn-block new-bid  new-bid-button hidden" 
+            style="box-shadow: rgba(3, 7, 59, 0.15) 0px -2px 5px 0px inset,
+            rgba(3, 7, 59, 0.3) 0px -5px 9px 0px inset; 
+            /* rgba(3, 7, 59, 0.4) 0px -7px 11px 0px inset; */
+           border-radius: .9rem; font-weight: 700; border:none;"
+                type="button" data-toggle="modal" data-target="#exampleModalCenter" >New Bid</button>
                                     <!-- new bid button -->
+                {% endif %}
 
                     <div class="modal fade new-bid " id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -215,7 +279,12 @@
             </div>
             <div class="auction-detail-page-text">
                 <div class="auction-detail-text-content">
-                {{object.tripDetails}}
+                    <br>
+                    <div class="auction-detail-title">{{object.auction_title |upper}}</div>
+                
+                <br>
+                {{object.tripDetails|safe}}
+                <br><br>
                 </div> 
             </div>
     </div>
@@ -232,5 +301,5 @@
 </div>
 
 
-
+<img class="watermark-image" src="/media/parrot-logo.png" alt="">
 {% endblock %}
