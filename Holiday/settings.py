@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '67%p$)v5nen#fvhnt!hhmcp%et2%5wy9qp_mrpk(3eyc4devub'
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -148,3 +148,4 @@ CHANNEL_LAYERS = {
 }
 
 ASGI_APPLICATION = "Holiday.routing.application"
+
