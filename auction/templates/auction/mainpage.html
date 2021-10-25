@@ -3,6 +3,7 @@
 {% block title %} <title> Main Page </title> {% endblock %}
 
 {% load static %}
+{% load humanize %}
 
 {% block content %}
 
@@ -18,18 +19,23 @@
                     <div class="form-label-and-input">                        
                         <label class="form-label" for="id_auctionVehicleType">Vehicle</label>
                         <select class="form-control" type="text" id="id_auctionVehicleType" name="auctionVehicleType">
-                            <option></option>
-                            <option>BOAT</option>
-                            <option>CARAVAN</option>
-                            <option>CAR</option>
-                            <option>BUS</option>
-                            <option>TINYHOUSE</option>
+                            <option class="vehicle_option"></option>
+                            <option class="vehicle_option">BOAT</option>
+                            <option class="vehicle_option">CARAVAN</option>
+                            <option class="vehicle_option">CAR</option>
+                            <option class="vehicle_option">BUS</option>
+                            <option class="vehicle_option">WALK</option>
+                            <option class="vehicle_option">RUN</option>
+                            <option class="vehicle_option">BICYCLE</option>
+                            <option class="vehicle_option">MOTORCYCLE</option>
+                            <option class="vehicle_option">TINYHOUSE</option>
                         </select>
                     </div>
 
                     <div class="form-label-and-input">                        
                         <label class="form-label" for="exampleFormControlSelect1">Vacancy</label>
-                        <select class="form-control" type="number" name="vacancy"  id="id_vacancy">
+                        <select class="form-control vacancy-selector" type="number" name="vacancy"  id="id_vacancy">
+                           
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
@@ -59,24 +65,98 @@
                             <option>27</option>
                             <option>28</option>
                             <option>29</option>
+                            <option>30</option>
+                            <option>31</option>
+                            <option>32</option>
+                            <option>33</option>
+                            <option>34</option>
+                            <option>35</option>
+                            <option>36</option>
+                            <option>37</option>
+                            <option>38</option>
+                            <option>39</option>
+                            <option>40</option>
+                            <option>41</option>
+                            <option>42</option>
+                            <option>43</option>
+                            <option>44</option>
+                            <option>45</option>
+                            <option>46</option>
+                            <option>47</option>
+                            <option>48</option>
+                            <option>49</option>
+                            <option>50</option>
+                            <option>51</option>
+                            <option>52</option>
+                            <option>53</option>
+                            <option>54</option>
+                            <option>55</option>
+                            <option>56</option>
+                            <option>57</option>
+                            <option>58</option>
+                            <option>59</option>
+                            <option>60</option>
+                            <option>61</option>
+                            <option>62</option>
+                            <option>63</option>
+                            <option>64</option>
+                            <option>65</option>
+                            <option>66</option>
+                            <option>67</option>
+                            <option>68</option>
+                            <option>69</option>
                         </select> 
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div  class="form-label-and-input">                            
-                        <label class="form-label" for="exampleFormControlSelect1">Starts</label>
-                        <input type="date" name="trip_startDate" id="id_trip_startDate" class="form-control">
+                        <label class="form-label date-label" for="exampleFormControlSelect1">Starts</label>
+                        <input type="date" name="trip_startDate" id="id_trip_startDate" class="form-control date-input">
                     </div>
 
                     <div  class="form-label-and-input"> 
-                        <label class="form-label" for="exampleFormControlSelect1">Ends</label>
-                        <input type="date" name="trip_endDate" id="id_trip_endDate" class="form-control">
+                        <label class="form-label date-label1" for="exampleFormControlSelect1">Ends</label>
+                        <input type="date" name="trip_endDate" id="id_trip_endDate" class="form-control  date-input2">
                     </div>
                 </div>
+
+                <input type="number" step="any" style="display: none;" required="" name="lat__gt" id="lat__gt" ></input>
+                <input type="number" step="any" style="display:  none;" required="" name="lat__lt" id="lat__lt"></input>
+                <input type="number" step="any" style="display:  none;" required="" name="lon__gt" id="lon__gt"></input>
+                <input type="number" step="any" style="display:  none;" required="" name="lon__lt" id="lon__lt"></input>
+
                 <div class="form-row">
-                    <button class="btn btn-success double" style="justify-content: right; display: block;" id="filter-button" type="submit">Filter</button>
+                    <button class="btn btn-primary filter-and-clear-buttons" 
+                    style="justify-content: right; display: block; font-weight: 700;
+                     box-shadow: rgba(3, 7, 59, 0.22) 0px -2px 5px 0px inset,
+            rgba(3, 7, 59, 0.5) 0px -5px 9px 0px inset; 
+            /* rgba(3, 7, 59, 0.7) 0px -7px 11px 0px inset; */
+           border-radius: .9rem; font-weight: 700; border:none"
+                    id="clear-filter-button" type="reset">Clear</button>
+
+                    <button class="btn btn-success filter-and-clear-buttons" 
+                    style="justify-content: right; display: block;
+                    box-shadow: rgba(3, 7, 59, 0.15) 0px -2px 5px 0px inset,
+            rgba(3, 7, 59, 0.3) 0px -5px 9px 0px inset; 
+            /* rgba(3, 7, 59, 0.4) 0px -7px 11px 0px inset; */
+           border-radius: .9rem; font-weight: 700; border:none;"
+                    id="filter-button" type="submit">
+                    Apply</button>
                 </div>
+
+                <div class="form-row">
+                    <button class="btn btn-info double filterbutton2" 
+                    style="justify-content: right; display: block; font-weight: 700;
+                    box-shadow: rgba(3, 7, 59, 0.22) 0px -2px 5px 0px inset,
+           rgba(3, 7, 59, 0.5) 0px -5px 9px 0px inset; 
+           /* rgba(3, 7, 59, 0.7) 0px -7px 11px 0px inset; */
+          border-radius: .9rem;font-weight: 700; border:none"
+                    id="filter-button2" type="submit">Update Map</button>
+                </div>
+
+
+
               </form>
 
         </div>
@@ -87,25 +167,47 @@
             <div class="all-auctions-container" id="all-auctions-container">
                <div class="slider">
 
-                {% for auction in auctions %}
+
+                <!-- {% if "vacancy" in request.get_full_path %} -->
+                {% for auction in auctions|slice:":20"  %}
 
                 <div class="slide hidden {{auction.vehicle.vehicle_type}}" id="slide-no-{{forloop.counter0}}" data-slide_number="{{forloop.counter0}}">
-                    <div class="card slide-card " id="slide-card-{{forloop.counter}}">
+                    <div class="card slide-card mainpage-slide" id="slide-card-{{forloop.counter}}">
                         <img class="card-img-top" style="height: 13rem;" src="{{auction.auctionImage.url}}" alt="Card image cap">
                         <div class="card-body">
                                 
+                            <h5 class="card-title" style="color: #050B3B;"> <strong >{{auction.auction_title}}</strong></h5>
+                            
+                            <p class="card-text">Space for <strong class="text-primary" >{{auction.vacancy| intcomma}}</strong>,
+                                 
+                               
+                                
+                            {% if not auction.vehicle.vehicle_type == "WALK" %}
+                                {% if not auction.vehicle.vehicle_type == "RUN" %}
+  
+                                on <a class="btn btn-primary btn-sm px-2" 
+                                style="box-shadow: rgba(3, 7, 59, 0.22) 0px -2px 5px 0px inset,
+                                rgba(3, 7, 59, 0.5) 0px -5px 9px 0px inset; 
+                                /* rgba(3, 7, 59, 0.7) 0px -7px 11px 0px inset; */
+                               border-radius: .9rem; font-weight: 700; border:none"
+                                data-id="{{auction.id}}" href="{% url 'auction:vehicle_detail' auction.vehicle.id %}" 
+                                    role="button" aria-pressed="true">{{auction.vehicle.v_name| upper}}</a>
 
-                            <h5 class="card-title"> <strong ></strong></h5>
-                            
-                            <p class="card-text">Space for <strong class="text-primary" >{{auction.vacancy}}</strong>,
-                                on <a class="btn btn-primary btn-sm px-2" data-id="{{auction.id}}" href="{% url 'auction:vehicle_detail' auction.vehicle.id %}" 
-                                role="button" aria-pressed="true">{{auction.vehicle.v_name| upper}}</a>
-        
-                            
+                                {% endif %}
+                            {% endif %}
+
+                            {% if auction.vehicle.vehicle_type == "WALK" %}
+                                   by <span class="text-primary" style="font-weight: 600;">WALK</span> 
+                            {% endif %}
+
+                            {% if auction.vehicle.vehicle_type == "RUN" %}
+                                     by <span class="text-primary" style="font-weight: 600;">RUN</span> 
+                            {% endif %}
+                                
+                                
+                                
                             <br> 
-                            
-
-
+     
                             Trip from <strong class="text-primary" >{{auction.trip_startDate|date:"M d, y"}}</strong> to 
                             <strong  class="text-primary" >{{auction.trip_endDate|date:"M d, y"}}</strong>.  <br> 
                             
@@ -113,29 +215,152 @@
                             </strong> .</p>
                         
                             <a href="{% url 'auction:view_auction' auction.id %}" class="btn btn-primary" 
+                            style="
+                            box-shadow: rgba(3, 7, 59, 0.22) 0px -2px 5px 0px inset,
+            rgba(3, 7, 59, 0.5) 0px -5px 9px 0px inset; 
+            /* rgba(3, 7, 59, 0.7) 0px -7px 11px 0px inset; */
+           border-radius: .9rem; font-weight: 700; border:none; margin-left: 1.7rem;"
+
                             data-id="{{auction.id}}">Trip Details</a>
                         
-                            <button class="btn btn-success see-on-map-button m-auto" id="see-on-map-button" 
-                            data-latitude="{{auction.Latitude}}" data-longitude="{{auction.Longitude}}" 
-                            data-trip_details="{{auction.tripDetails}}" data-id="{{auction.id}}" 
-                            data-slide_number="{{forloop.counter}}" type="submit">See on Map</button>
+                            <button class="btn btn-primary see-on-map-button" id="see-on" 
+                            data-latitude="{{auction.Latitude}}" 
+                            data-longitude="{{auction.Longitude}}" 
+                            data-trip_title="{{auction.auction_title}}"
+                            data-trip_details="{{auction.auction_brief|truncatechars:180 }}" data-id="{{auction.id}}" 
+                            data-slide_number="{{forloop.counter}}" type="submit"
+                            style="box-shadow: rgba(3, 7, 59, 0.22) 0px -2px 5px 0px inset,
+                            rgba(3, 7, 59, 0.5) 0px -5px 9px 0px inset; 
+                            /* rgba(3, 7, 59, 0.7) 0px -7px 11px 0px inset; */
+                           border-radius: .9rem; font-weight: 700; border:none; margin-left: .2rem; font-weight: 700"
 
-                            {% if auction.vehicle.v_owner == user %}
-                            <a href="{% url 'auction:auction_delete' auction.id %}" class="btn btn-danger see-on-map-button m-auto" style="padding-left: 0.4rem; padding-right: 0.4rem;"
+                            >See on Map</button>
+
+                            <!-- {% if auction.vehicle.v_owner == user %}
+                            <a href="{% url 'auction:auction_delete' auction.id %}" 
+                            class="btn btn-danger see-on m-auto" 
+                            style="padding-left: 0.4rem; padding-right: 0.4rem;
+                            box-shadow: rgba(250, 11, 11, 0.2) 0px -11px 11px 0px inset, 
+                             rgba(250, 11, 11, 0.3) 0px -8px 15px 0px inset, 
+                             rgba(250, 11, 11, 0.4) 0px -15px 22px 0px inset, 
+                             rgba(0, 0, 0, 0.06) 0px 2px 1px;
+                             border-radius: .9rem;"
+                            
                             data-id="{{auction.id}}">Delete</a>
-                            {% endif %}
+                            {% endif %} -->
                     </div>
                     </div>
                 </div>
                 {% endfor %}
+                <!-- {% endif %} -->
+
+
+
+
+
+                <!-- {% if "vacancy" not in request.get_full_path %}  -->
+                    {% for auction in local_auctions|slice:":20"  %}
+
+                    <div class="slide hidden {{auction.vehicle.vehicle_type}}" id="slide-no-{{forloop.counter0}}" data-slide_number="{{forloop.counter0}}">
+                        <div class="card slide-card mainpage-slide" id="slide-card-{{forloop.counter}}"
+                        style="box-shadow: rgba(28, 16, 190, 0.55) 0px -5px 11px 0px inset"
+                        >
+                            <img class="card-img-top" style="height: 13rem;" src="{{auction.auctionImage.url}}" alt="Card image cap">
+                            <div class="card-body">
+                                    
+                                <h5 class="card-title" style="color: #050B3B;"> <strong >{{auction.auction_title}}</strong></h5>
+                                
+                                <p class="card-text">Space for <strong class="text-primary" >{{auction.vacancy| intcomma}}</strong>,
+                                     
+                                    
+
+                                    {% if not auction.vehicle.vehicle_type == "WALK" %}
+                                    {% if not auction.vehicle.vehicle_type == "RUN" %}
+
+
+                                        on <a class="btn btn-primary btn-sm px-2" 
+                                        style=" box-shadow: rgba(3, 7, 59, 0.22) 0px -2px 5px 0px inset,
+                                        rgba(3, 7, 59, 0.5) 0px -5px 9px 0px inset; 
+                                        /* rgba(3, 7, 59, 0.7) 0px -7px 11px 0px inset; */
+                                       border-radius: .9rem; font-weight: 700; border:none;"
+                                        data-id="{{auction.id}}" href="{% url 'auction:vehicle_detail' auction.vehicle.id %}" 
+                                        role="button" aria-pressed="true">{{auction.vehicle.v_name| upper}}</a>
+    
+                                    {% endif %}
+                                {% endif %}
+
+                                {% if auction.vehicle.vehicle_type == "WALK" %}
+                                    by <span class="text-primary" style="font-weight: 600;">WALK</span> 
+                                {% endif %}
+
+                                {% if auction.vehicle.vehicle_type == "RUN" %}
+                                    by <span class="text-primary" style="font-weight: 600;">RUN</span> 
+                                {% endif %}
+
+                               
+            
+                                <br> 
+        
+                                Trip from <strong class="text-primary" >{{auction.trip_startDate|date:"M d, y"}}</strong> to 
+                                <strong  class="text-primary" >{{auction.trip_endDate|date:"M d, y"}}</strong>.  <br> 
+                                
+                                Auction ends in <strong  class="text-primary" >{{auction.auctionEndDate|timeuntil}}
+                                </strong> .</p>
+                            
+                                <a href="{% url 'auction:view_auction' auction.id %}" 
+                                class="btn btn-primary" 
+                                style="box-shadow: rgba(3, 7, 59, 0.22) 0px -2px 5px 0px inset,
+                                rgba(3, 7, 59, 0.5) 0px -5px 9px 0px inset; 
+                                /* rgba(3, 7, 59, 0.7) 0px -7px 11px 0px inset; */
+                               border-radius: .9rem; font-weight: 700; border:none;
+                               margin-left: 1.7rem; font-weight: 700"
+                                data-id="{{auction.id}}">Trip Details</a>
+                            
+                                <button class="btn btn-primary see-on-map-button" 
+                                id="see-on" 
+                                data-latitude="{{auction.Latitude}}" 
+                                data-longitude="{{auction.Longitude}}" 
+                                data-trip_title="{{auction.auction_title}}"
+                                data-trip_details="{{auction.auction_brief |truncatechars:180 }}" data-id="{{auction.id}}" 
+                                data-slide_number="{{forloop.counter}}" 
+                                 type="submit"
+                                 style="box-shadow: rgba(3, 7, 59, 0.22) 0px -2px 5px 0px inset,
+                                 rgba(3, 7, 59, 0.5) 0px -5px 9px 0px inset; 
+                                 /* rgba(3, 7, 59, 0.7) 0px -7px 11px 0px inset; */
+                                border-radius: .9rem; font-weight: 700; border:none;
+                                margin-left: 0.2rem; font-weight: 700"
+                                 >See on Map</button>
+
+                                <!-- {% if auction.vehicle.v_owner == user %}
+                                <a href="{% url 'auction:auction_delete' auction.id %}" class="btn btn-danger see-on m-auto" 
+                                style="padding-left: 0.4rem; padding-right: 0.4rem;
+                                box-shadow: rgba(250, 11, 11, 0.1) 0px -11px 11px 0px inset, 
+                                 rgba(250, 11, 11, 0.2) 0px -8px 15px 0px inset, 
+                                 rgba(250, 11, 11, 0.3) 0px -15px 22px 0px inset; 
+                                 border-radius: .9rem;"
+                                
+                                data-id="{{auction.id}}">Delete</a>
+                                {% endif %} -->
+                                
+                        </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                <!-- {% endif %} -->
+
                 <button class="slider__btn slider__btn--left"><img style="height: 2.5rem; transform: rotate(180deg);" src="/static/arrow.png" alt=""></button>
                 <button class="slider__btn slider__btn--right"><img style="height: 2.5rem;" src="/static/arrow.png" alt=""></button>
             </div> 
-            <!-- &rarr; -->
             </div>
         </div>
         <div class="add-new-auction">
-            <a href="{% url 'auction:auction_create' %}" class="btn btn-primary btn-block w-75 m-auto btn-lg"> New Voyage</a>
+            <a href="{% url 'auction:auction_create' %}" class="btn btn-primary btn-block w-50 m-auto btn-lg" 
+            style="box-shadow: rgba(3, 7, 59, 0.22) 0px -2px 5px 0px inset,
+            rgba(3, 7, 59, 0.5) 0px -5px 9px 0px inset; 
+            /* rgba(3, 7, 59, 0.7) 0px -7px 11px 0px inset; */
+           border-radius: .9rem; font-weight: 700; border:none;"
+            >
+            New Voyage</a>
         </div>
     </div>
     

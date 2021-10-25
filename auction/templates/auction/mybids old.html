@@ -1,0 +1,93 @@
+{% extends "./base.html" %}
+
+{% block title %} <title> Main Page </title> {% endblock %}
+
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+
+
+
+
+
+<div class="main-page-container mybids-page" id="mybids-page">
+    <div class="dashboard">
+
+        <!-- <div class="filters-section">
+                   <button class="btn btn-info btn-block"  id="toggle-expired-button" type="submit">Toggle Expired Bids</button>
+
+
+      </div> -->
+
+
+
+        <div class="auctions-list">
+            <div class="all-auctions-container" id="all-auctions-container">
+               <div class="slider mybids-slider">
+
+                {% for bid in mybids %}
+
+                <div class="slide hidden {{bid.auction.vehicle.vehicle_type}}" id="slide-no-{{forloop.counter0}}" data-slide_number="{{forloop.counter0}}">
+                    <div class="card slide-card " id="slide-card-{{forloop.counter}}">
+                        <img class="card-img-top" style="height: 13rem;" src="{{bid.auction.auctionImage.url}}" alt="Card image cap">
+                        <div class="card-body">
+                            <div class="card-buttons-top" data-id="{{auction.id}}"><a href="{% url 'auction:vehicle_detail' bid.auction.vehicle.id %}" class="btn btn-danger" role="button" 
+                            aria-pressed="true">{{bid.auction.vehicle.v_name| upper}}</a>
+                            <!-- <br> -->
+                            
+                            </div>
+                            <h5 class="card-title"> <strong  style="  color: rgb(168, 27, 27)"></strong></h5>
+                            
+                            <p class="card-text">Space for <strong  style="  color: rgb(168, 27, 27)">{{bid.auction.vacancy}}</strong> people.<br> 
+                            
+                            Trip from <strong  style="  color: rgb(168, 27, 27)">{{bid.auction.trip_startDate|date:"M d, y"}}</strong> to 
+                            <strong  style="  color: rgb(168, 27, 27)">{{bid.auction.trip_endDate|date:"M d, y"}}</strong>.  <br> 
+                            
+                            Auction ends in <strong  style="  color: rgb(168, 27, 27)">{{bid.auction.auctionEndDate|timeuntil}}</strong> .</p>
+                        
+                            <div class="card-buttons-row">
+                                
+                                <a href="{% url 'auction:view_auction' bid.auction.id %}" 
+                                class="btn btn-primary card-button-custom" data-id="{{bid.auction.id}}">Trip Details</a>
+                            
+                                <button class="btn btn-success see-on-map-button  card-button-custom" id="see-on-map-button"
+                                data-latitude="{{bid.auction.Latitude}}" data-longitude="{{bid.auction.Longitude}}" data-trip_details="{{bid.auction.tripDetails}}" data-id="{{bid.auction.id}}" 
+                                data-slide_number="{{forloop.counter}}" type="submit">See on Map</button>
+                                
+                            </div>
+
+                            <div class="card-buttons-row">
+                                
+                                <a href="#" class="btn btn-outline-info mt-1  card-button-custom" 
+                                data-id="{{bid.price}}">My bid: €{{bid.price|intcomma}}</a>
+
+                                <button type="button" class="btn btn-outline-success mt-1  card-button-custom" 
+                                data-container="body" data-toggle="popover" data-placement="bottom"
+                                data-content="{{bid.introduction}}">
+                                My message</button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                {% endfor %}
+                <button class="slider__btn slider__btn--left"><img style="height: 2.5rem; transform: rotate(180deg);" src="/static/arrow.png" alt=""></button>
+                <button class="slider__btn slider__btn--right"><img style="height: 2.5rem;" src="/static/arrow.png" alt=""></button>
+            </div> 
+            </div>
+        </div>
+
+    </div>
+    
+    <div class="map-container">
+        <div class="mapid" id="mapid"></div>
+    </div>
+
+
+</div>
+
+{% endblock %}

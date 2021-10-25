@@ -7,6 +7,8 @@
 {% block content %}
 
 
+
+
 <div class="auction-form-page">
     <div class="auction-form-content-section" >
         <form method="POST" enctype="multipart/form-data">
@@ -28,8 +30,40 @@
                         </select> 
                     </div>   
                 </div>
-                    
-                    <!-- VACANCY SELECTOR -->
+
+                    <!-- TITLE SELECTOR -->
+                    <div id="id_auction_title" class="form-group auction-form-field"> 
+                        <label for="id_auction_title" class=" requiredField">
+                            Voyage Name &nbsp<span class="asteriskField">*</span> 
+                        </label> 
+                        <div class=""> 
+                            <input type="text"  name="auction_title" class="numberinput form-control" required="" id="id_auction_title"> 
+                        </div> 
+                    </div> 
+
+
+
+                    <!-- BRIEF SELECTOR -->
+                    <div id="id_auction_brief" class="form-group auction-form-field"> 
+                        <label for="id_auction_brief" class=" requiredField">
+                            Voyage Brief &nbsp<span class="asteriskField">*</span> 
+                        </label> 
+                        <div class=""> 
+                            <input type="text" placeholder="Brief for map view - 180 chars max - detailed explanation below" name="auction_brief" class="numberinput form-control" required="" id="id_auction_brief"> 
+                        </div> 
+                    </div> 
+
+
+
+
+
+
+
+
+
+    
+
+                <!-- VACANCY SELECTOR -->
                 <div id="div_id_vacancy" class="form-group auction-form-field"> 
                     <label for="id_vacancy" class=" requiredField">
                         Vacancy &nbsp<span class="asteriskField">*</span> 
@@ -63,7 +97,7 @@
                 <!-- STARTDATE SELECTOR -->
                 <div id="div_id_trip_startDate" class="form-group auction-form-field"> 
                     <label for="id_trip_startDate" class=" requiredField">
-                    Trip Start Date &nbsp<span class="asteriskField">*</span> 
+                        Voyage Start Date &nbsp<span class="asteriskField">*</span> 
                     </label> 
                     <div class=""> 
                         <input type="date" name="trip_startDate" class="datetimeinput form-control" required="" id="id_trip_startDate"> 
@@ -73,38 +107,53 @@
                 <!-- ENDDATE SELECTOR -->
                 <div id="div_id_trip_endDate" class="form-group auction-form-field"> 
                     <label for="id_endDate" class=" requiredField">
-                        Trip End Date &nbsp<span class="asteriskField">*</span> 
+                        Voyage End Date &nbsp<span class="asteriskField">*</span> 
                     </label> 
                     <div class=""> 
                         <input type="date" name="trip_endDate" class="datetimeinput form-control" required="" id="id_trip_endDate"> 
                     </div> 
                 </div> 
 
-                <!-- TRIP DETAILS FIELD -->
-                <div id="div_id_tripDetails" class="form-group auction-form-field"> 
-                    <label for="id_tripDetails" class=" requiredField">
-                        TripDetails &nbsp<span class="asteriskField">*</span> 
-                    </label> 
-                    <div class=""> 
-                        <!-- <input type="text" name="tripDetails" maxlength="280" class="textinput textInput form-control" required="" id="id_tripDetails">  -->
-                        <textarea placeholder="Please describe your trip in detail:  Duration, itinerary, etc.  You can add your waypoints on the map in the next step."  
-                        
-                        type="text" rows="3" cols="120" name="tripDetails" maxlength="3000" class="textinput textInput form-control" required="" id="id_tripDetails"></textarea>
-                       
-                    </div> 
-                </div>
+
                 <div id="div_id_auctionEndDate" class="form-group auction-form-field"> 
                     <label for="id_auctionEndDate" class=" requiredField">
-                        Auction End Date &nbsp<span class="asteriskField">*</span> 
+                        Latest Bid Date &nbsp<span class="asteriskField">*</span> 
                     </label> 
                     <div class=""> 
                         <input type="date" name="auctionEndDate" class="datetimeinput form-control" required="" id="id_auctionEndDate"> 
                     </div> 
                 </div>
 
+                <div id="div_id_auctionEndDate" class="form-group auction-form-field"> 
+                    <label for="id_minPrice" class="requiredField">
+                        Min. Price (€) &nbsp<span class="asteriskField">*</span> 
+                    </label> 
+                    <div class=""> 
+                        <input type="number" name="minPrice" class="datetimeinput form-control" id="id_minPrice"> 
+                    </div> 
+                </div>
+
+<!-- TRIP DETAILS FIELD -->
+<div id="div_id_tripDetails" class="form-group auction-form-field"> 
+    <label for="id_tripDetails" class=" requiredField">
+        Voyage Details &nbsp<span class="asteriskField">*</span> 
+    </label> 
+
+    <div class="django-ckeditor-widget" data-field-id="id_tripDetails" 
+    style="display: inline-block;"> 
+    
+    <textarea class="ckeditorwidget form-control is-invalid" 
+    cols="40" id="id_tripDetails" maxlength="3000" name="tripDetails" rows="10" required="" 
+    data-processed="0" data-config="{&quot;skin&quot;: &quot;moono-lisa&quot;, &quot;toolbar_Basic&quot;: [[&quot;Source&quot;, &quot;-&quot;, &quot;Bold&quot;, &quot;Italic&quot;]], &quot;toolbar_Full&quot;: [[&quot;Styles&quot;, &quot;Format&quot;, &quot;Bold&quot;, &quot;Italic&quot;, &quot;Underline&quot;, &quot;Strike&quot;, &quot;SpellChecker&quot;, &quot;Undo&quot;, &quot;Redo&quot;], [&quot;Link&quot;, &quot;Unlink&quot;, &quot;Anchor&quot;], [&quot;Image&quot;, &quot;Flash&quot;, &quot;Table&quot;, &quot;HorizontalRule&quot;], [&quot;TextColor&quot;, &quot;BGColor&quot;], [&quot;Smiley&quot;, &quot;SpecialChar&quot;], [&quot;Source&quot;]], &quot;toolbar&quot;: &quot;Full&quot;, &quot;height&quot;: 291, &quot;width&quot;: 835, &quot;filebrowserWindowWidth&quot;: 940, &quot;filebrowserWindowHeight&quot;: 725, &quot;language&quot;: &quot;en-us&quot;}" data-external-plugin-resources="[]" data-id="id_tripDetails" data-type="ckeditortype" style="margin-top: 0px; margin-bottom: 0px; height: 421px;">
+    </textarea>
+  
+
+    </div>
+</div>
+
                 <div id="div_id_auctionImage" class="form-group auction-form-field"> 
                     <label for="id_auctionImage" class=" requiredField" style="display: inline-block;">
-                        Auction Image &nbsp<span class="asteriskField">*</span> 
+                        Voyage Image &nbsp<span class="asteriskField">*</span> 
                     </label> 
                     <div class="" style="display: inline-block;"> 
                         <input type="file" name="auctionImage" accept="image/*" class="clearablefileinput form-control-file" id="id_auctionImage"> 
@@ -112,10 +161,16 @@
                     </div> 
 
                 </div>
+
+
                 <div class="form-group auction-form-field" style="display: inline-block;" >
                     <!-- <a href="{% url 'auction:vehicle_create' %}" class="btn btn-success" role="button" 
                     aria-pressed="true">Register New Vehicle </a>   -->
-                    <button class="btn btn-primary" id="create-form-button" type="submit">Create Itinerary</button>
+                    <button class="btn btn-primary" 
+                    style="box-shadow: rgba(3, 7, 59, 0.15) 0px -2px 5px 0px inset,
+                    rgba(3, 7, 59, 0.3) 0px -5px 9px 0px inset; 
+                    /* rgba(3, 7, 59, 0.4) 0px -7px 11px 0px inset; */
+                   border-radius: .9rem; font-weight: 700; border:none;" id="create-form-button" type="submit">Create Itinerary</button>
 
 
                 </div>
@@ -133,7 +188,10 @@
 
 
 
-
+<div style="width: 400px;"> 
+    {{ form.media }}
+    
+</div>
 
 
 {% endblock content %}

@@ -1,14 +1,19 @@
 {% extends "auction/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <div class="content-section user-page">
+    <div class="content-section user-page" style="margin: 3rem;">
         <form method="POST">
             {% csrf_token %}
-            <fieldset class="form-group" style="  background-color: rgba(5, 8, 58, 0.85); padding: 2rem;">
+            <fieldset class="form-group" style="  background-color: rgba(5, 8, 58, 0.85); padding: 2rem; color: white;">
                 {{ form|crispy }}
             </fieldset>
             <div class="form-group">
-                <button class="btn btn-info" type="submit">Sign Up</button>
+                <button class="btn btn-info"
+                style="box-shadow: rgba(3, 7, 59, 0.15) 0px -2px 5px 0px inset,
+                rgba(3, 7, 59, 0.3) 0px -5px 9px 0px inset; 
+                /* rgba(3, 7, 59, 0.4) 0px -7px 11px 0px inset; */
+               border-radius: .9rem; font-weight: 700; border:none;"
+                type="submit">Sign Up</button>
             </div>
         </form>
         <div class="border-top pt-3">

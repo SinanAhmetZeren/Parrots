@@ -9,7 +9,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('auction.urls')),
-    path('user/', include('user.urls')),
+    path('social/', include('user.urls')),
     path('chat/', include('chat.urls')),
     path('messages/', include('messaging.urls')),
 ]

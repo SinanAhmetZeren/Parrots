@@ -3,7 +3,9 @@
 {% block content %}
 
 
-<div class="all-profiles-messages-inputs"> 
+<div class="all-profiles-messages-inputs"
+style="  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  
+"> 
 
     
     <!-------- RENDERING MESSAGES TO AND FROM ONE USER -------> 
@@ -13,11 +15,23 @@
         <!-- USER'S PROFILE AND USERNAME -->
         <div class="profile-image-and-username">
             <a  href="{% url 'public_profile' sender.username %}">
-                <img class="bid-profile-image" src="{{sender.profile.image.url}}" alt="">
+                <img class="bid-profile-image-msg-page" src="{{sender.profile.image.url}}" alt=""
+                style="box-shadow: 0 1px 15px 3px rgba(5, 18, 136, 0.45);">
             </a>
             <div style="display:inline-block" >
-                {{sender.username}}
-                <!-- {{sender.id}} -->
+                
+                <button class="btn btn-primary see-on-map-button m-auto" id="see-on" 
+                            data-latitude="{{auction.Latitude}}" 
+                            data-longitude="{{auction.Longitude}}" 
+                            data-trip_title="{{auction.auction_title}}"
+                            data-trip_details="{{auction.tripDetails}}" data-id="{{auction.id}}" 
+                            data-slide_number="{{forloop.counter}}" type="submit"
+                            style="box-shadow: rgba(3, 7, 59, 0.15) 0px -2px 5px 0px inset,
+                            rgba(3, 7, 59, 0.3) 0px -5px 9px 0px inset; 
+                            /* rgba(3, 7, 59, 0.4) 0px -7px 11px 0px inset; */
+                           border-radius: .9rem; font-weight: 700; border:none;"
+                            >{{sender.username}}</button>
+
             </div>
 
         </div>   
@@ -29,9 +43,13 @@
                     {% csrf_token %}
                     <div id="alert-box-{{sender.id}}"></div>
                     <input type="text" name="message_input_{{sender.id}}" 
-                    style="background-color: #060d47; color: greenyellow; font-weight: 600; border: none;" 
-                    maxlength="280" class="mx-1 textInput form-control" required="" sender="{{sender.id}}" id="sender-{{sender.id}}"> 
-                    <button class="btn btn-primary send-message-button  mr-3" id="{{sender.id}}" type="submit">Send</button>
+                    style="background-color: #060d47; color: white; font-weight: 600; border: none;" 
+                    maxlength="1500" class="mx-1 textInput form-control" required="" sender="{{sender.id}}" id="sender-{{sender.id}}"> 
+                    <button class="btn btn-primary send-message-button  mr-3" 
+                    style="box-shadow: rgba(3, 7, 59, 0.15) 0px -2px 5px 0px inset,
+                    rgba(3, 7, 59, 0.3) 0px -5px 9px 0px inset; 
+                    /* rgba(3, 7, 59, 0.4) 0px -7px 11px 0px inset; */
+                   border-radius: .9rem; font-weight: 700; border:none;"id="{{sender.id}}" type="submit">Send</button>
 
                 </div>
             </div>    
@@ -50,7 +68,7 @@
                         {% if not message.sent_by == user %}
                             <div class="messaging-single-message">
                                 <div class="message-sent-by" >{{message.sent_by|upper}}: </div> 
-                                <div class="message-text-content" style="color: yellow;">{{message.message_text}}</div>
+                                <div class="message-text-content" style="color: darkred;">{{message.message_text}}</div>
                                 <div>{{message.createdDate}}</div>                       
                             </div>
                         {% endif %}

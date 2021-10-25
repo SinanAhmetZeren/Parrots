@@ -1,0 +1,580 @@
+/* rem and em do NOT depend on html font-size in media queries! Instead, 1rem = 1em = 16px */
+
+/**************************/
+/* BELOW 1344px (Smaller desktops) */
+/**************************/
+
+@media (max-width: 86em) {
+    html {
+        /* font-size: 115%; */
+    
+    }
+    
+}
+
+
+
+/**************
+IPAD PRO) 
+65 * 16 = 1040
+84 * 16 = 1344
+***************/
+@media only screen 
+  and (min-device-width: 1024px) 
+  and (max-device-width: 1366px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  {
+   html {
+        font-size: 133%;
+    
+    }
+
+    .user-contact-line:last-child{
+        font-size: .7rem;
+    }
+    .vehicle-line{
+        grid-template-columns: 1.4fr 2fr 2.7fr .7fr;
+    }
+
+    .voyage-line{
+        grid-template-columns: 1.5fr 5fr .7fr;
+    }
+
+    .profile-form{
+        margin: 3rem 0rem;
+      }
+    .vehicle-profile-page{
+        height: 75vh;
+        margin: 2rem 0;
+        
+    }
+
+    .vehicle-description-container-single,
+    .vehicle-description-container {
+        height: 20rem;
+        }
+        .vehicle-description-text-single,
+        .vehicle-description-text {
+        height: 18rem;
+        }
+
+    .vehicle-image-container-all{
+        transform: translateX(-8rem) scale(.7);
+        }
+
+    .vehicle-information-container{
+        width: 33rem;
+    }
+
+    .vehicle-profile-page {
+        margin: 1rem;
+    }
+
+    .form-label {
+        width: 4rem;
+    }
+
+    .slider{
+        margin-top: 3rem;
+    }
+    
+.auction-detail-page-details-section{
+    height: 83vh;
+}
+
+.auction-card {
+    grid-template-columns: 2fr 3fr;
+}
+.auction-bids-box{
+    height: 53vh;
+}
+}
+
+
+
+/**************************/
+/* BELOW 1200px (Landscape Tablets) */
+/**************************/
+  
+@media (max-width: 75em) {
+html {
+    font-size: 95%;
+
+}
+.vehicle-line{
+    grid-template-columns: 1.4fr 2fr 2.7fr .7fr;
+}
+
+
+.voyage-line{
+    grid-template-columns: 1.5fr 5fr .7fr;
+}
+
+.profile-form{
+    margin: 3rem 0rem;
+  }
+
+.auction-detail-page-left-column,
+.auction-detail-page-middle-column{
+    height: 92vh;
+}
+
+.auction-detail-page-details-section{
+    height: 85vh;
+}
+
+.auction-card {
+    grid-template-columns: 2fr 3fr;
+}
+.auction-bids-box{
+    height: 55vh;
+}
+.slider {
+    transform: scale(1.15);
+    height: 31rem;
+    margin-top: 2rem;
+}
+
+.slide-card{
+    margin: 2rem auto;
+}
+
+.user-contact-details {
+    margin: 3rem 0 0 0;
+}
+
+.date-input{
+    width: 87%;
+    justify-self: right;
+    margin-right: 0.4rem;
+}
+.date-input2{
+    width: 89%;
+    justify-self: right;
+    margin-right: 0.0rem;
+}
+
+.form-label{
+    width: 2.2rem;
+}
+
+}
+  
+
+/**************************/
+/* BELOW 1152  */
+/**************************/
+  
+@media (max-width: 72em) {
+    html {
+        font-size: 90%;
+    
+    }
+
+
+    .vehicle-profile-page{
+        height: 75vh;
+        margin: 2rem 1rem;
+        
+    }
+
+    .vehicle-image-container-all{
+        transform: translateX(-6rem) scale(.85);
+        }
+
+    .vehicle-information-container{
+        width: 35rem;
+    }
+
+
+    .auction-card {
+    grid-template-columns: 1.6fr 3fr;
+}
+    .slider {
+        transform: scale(1.15);
+        height: 31rem;
+        margin-top: 2rem;
+    }
+    
+    .slide-card{
+        margin: 2rem auto;
+    }
+    
+    .user-contact-details {
+        margin: 3rem 0 0 0;
+    }
+    
+    .date-input{
+        width: 87%;
+        justify-self: right;
+        margin-right: 0.4rem;
+    }
+    .date-input2{
+        width: 89%;
+        justify-self: right;
+        margin-right: 0.0rem;
+    }
+    
+    .form-label{
+        width: 2.2rem;
+    }
+    
+    }
+      
+    
+
+
+
+
+/**************************/
+/* BELOW 944px (Tablets) */
+/**************************/
+
+@media (max-width: 59em) {
+html {
+    /* 8px / 16px = 0.5 = 50% */
+    font-size: 50%;
+}
+
+.vehicle-line{
+    grid-template-columns: 1fr 2fr 2.7fr .7fr;
+}
+
+.voyage-line{
+    grid-template-columns: 1fr 5fr .7fr;
+}
+
+.profile-form{
+    margin: 3rem 0rem;
+  }
+
+.vehicle-profile-page{
+    height: 85vh;
+    margin: 2rem 0;
+    
+}
+.vehicle-image-container-all{
+    transform: translateX(0) scale(1);
+    }
+
+.vehicle-information-container{
+    width: 40rem;
+}
+
+.vehicle-profile-page {
+    margin: 3rem;
+}
+
+
+.slider {
+    transform: scale(1.15);
+    height: 31rem;}
+
+.slide-card{
+    margin: 2rem auto;
+}
+
+.user-contact-details {
+    margin: 3rem 0 0 0;
+}
+
+.date-input{
+    width: 89%;
+    justify-self: right;
+    margin-right: 0.2rem;
+}
+.date-input2{
+    width: 89%;
+    justify-self: right;
+    margin-right: 0.0rem;
+}
+
+}
+  
+
+/**************************/
+/* BELOW 840px (Tablets) */
+/**************************/
+
+@media (max-width: 53em) {
+html {
+    font-size: 48%;
+}
+
+.vehicle-image-container-all{
+    transform: translateX(2rem) scale(1);
+    }
+
+.vehicle-information-container{
+    width: 53rem;
+}
+
+.slider {
+    transform: scale(1.15);
+    height: 30rem;}
+
+.slide-card{
+    margin: 2rem auto;
+}
+
+.user-contact-details {
+    margin: 3rem 0 0 0;
+}
+
+.date-input{
+    width: 98%;
+    justify-self: right;
+    margin-right: 0.2rem;
+}
+.date-input2{
+    width: 99%;
+    justify-self: right;
+    margin-right: 0.0rem;
+}
+.popup-card{
+    transform: translateX(50%)  scale(1.2);
+}
+
+.leaflet-container a.leaflet-popup-close-button{
+    transform: translateX(-6rem) translateY(-1rem);
+}
+.vehicle-description-container,
+.vehicle-description-container-single{
+    height: 25rem;
+    }
+    .vehicle-description-text-single,
+    .vehicle-description-text {
+    height: 23rem;
+    }
+}
+
+
+/**************************/
+/* BELOW 750px (Smaller tablets) */
+/**************************/
+
+@media (max-width: 47em) {
+    html{
+        font-size: 47%;
+        }
+    
+    .main-page-container{
+        grid-template-columns: 2fr 5fr;
+    }
+    
+    .dashboard {
+        width: 33rem;
+    }
+    
+    .slider {
+        transform: scale(1.1);
+        height: 31rem;
+        margin-top: 6rem;
+    }
+    
+    .slide-card{
+        margin: 0rem auto;
+    }
+    
+    .user-contact-details {
+        margin: 3rem 0 0 0;
+    }
+    
+    .date-input{
+        width: 80%;
+        justify-self: right;
+        margin-right: 0.4rem;
+    }
+    .date-input2{
+        width: 80%;
+        justify-self: right;
+        margin-right: 0.0rem;
+    }
+    
+    .date-label {
+        width: 1.3rem;
+    }
+    .date-label1 {
+        width: .5rem;
+    }
+    .popup-card{
+        transform: translateX(50%)  scale(1.2);
+    }
+    
+    .leaflet-container a.leaflet-popup-close-button{
+        transform: translateX(-6rem) translateY(-1rem);
+    }
+
+    .add-new-auction{
+        transform: scale(1.2);
+    }
+
+    .vehicle-description-container-single,
+    .vehicle-description-container {
+    height: 29rem;
+    }
+    .vehicle-description-text-single,
+    .vehicle-description-text {
+    height: 27rem;
+    }
+    .vehicle-image-container-all{
+        transform: translateX(0rem) scale(1);
+        }
+    
+    .vehicle-information-container{
+        width: 40rem;
+    }
+    }
+
+
+
+/**************************/
+/* BELOW 704px (Smaller tablets) */
+/**************************/
+
+@media (max-width: 44em) {
+html{
+    font-size: 45%;
+    }
+
+.main-page-container{
+    grid-template-columns: 2fr 5fr;
+}
+
+.dashboard {
+    width: 33rem;
+}
+
+.slider {
+    transform: scale(1.1);
+    height: 27rem;
+    margin-top: 4rem;
+}
+
+.slide-card{
+    margin: 0rem auto;
+}
+
+.user-contact-details {
+    margin: 3rem 0 0 0;
+}
+
+.date-input{
+    width: 80%;
+    justify-self: right;
+    margin-right: 0.4rem;
+}
+.date-input2{
+    width: 80%;
+    justify-self: right;
+    margin-right: 0.0rem;
+}
+
+.date-label {
+    width: 1.3rem;
+}
+.date-label1 {
+    width: .5rem;
+}
+.popup-card{
+    transform: translateX(50%)  scale(1.2);
+}
+
+.leaflet-container a.leaflet-popup-close-button{
+    transform: translateX(-6rem) translateY(-1rem);
+}
+
+.vehicle-description-container-single,
+.vehicle-description-container {
+    height: 27rem;
+    }
+    .vehicle-description-text-single,
+    .vehicle-description-text {
+    height: 25rem;
+    }
+.vehicle-image-container-all{
+    transform: translateX(-1rem) scale(.9);
+    }
+}
+  
+/**************************/
+/* BELOW 570px (Phones) */
+/**************************/
+
+@media (max-width: 36em) {
+    html{
+        font-size: 39%;
+        }
+
+        .vehicle-description-container,
+        .vehicle-description-container-single {
+            height: 27rem;
+            }
+            .vehicle-description-text-single,
+            .vehicle-description-text {
+            height: 25rem;
+            }
+
+    .main-page-container{
+        grid-template-columns: 2fr 5fr;
+    }
+    
+    .dashboard {
+        width: 33rem;
+    }
+    
+    .slider {
+        transform: scale(1.1);
+        height: 27rem;
+    }
+    
+    .slide-card{
+        margin: 0rem auto;
+    }
+    
+    .user-contact-details {
+        margin: 3rem 0 0 0;
+    }
+    
+    .date-input{
+        width: 75%;
+        justify-self: right;
+        margin-right: 0.4rem;
+    }
+    .date-input2{
+        width: 75%;
+        justify-self: right;
+        margin-right: 0rem;
+    }
+    
+    .date-label {
+        width: .3rem;
+    }
+    .date-label1 {
+        width: 0rem;
+    }
+    .vacancy-selector{
+        margin-left: 0.2rem;
+    }
+    .add-new-auction{
+        margin-top: 2rem;
+        transform: scale(1.15);
+    }
+    .popup-card{
+        transform: translateX(70%) scale(1.2);
+        
+    }
+     
+    .leaflet-container a.leaflet-popup-close-button{
+        transform: translateX(-8rem) translateY(-1rem);
+    }
+}
+  
+/* 
+- Font sizes (px)
+10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98
+
+- Spacing system (px)
+2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 / 128
+*/
+  
